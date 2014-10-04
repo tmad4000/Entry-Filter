@@ -1,5 +1,9 @@
+
+
 if (Meteor.isClient) {
-  // counter starts at 0
+
+  
+
   Session.setDefault("counter", 0);
   Session.setDefault("current_idea", {parent_id: null});
 
@@ -15,9 +19,6 @@ if (Meteor.isClient) {
       return text;
     },
 
-    // ideaNodeTextHtml: function() {
-
-    // },
     splitted: function() {
       if (this.text !== undefined) {
         delims = ['--',':'];
@@ -40,20 +41,6 @@ if (Meteor.isClient) {
         return splitted[0];
       }
     }
-    // title: function() {
-
-    //   title=Template.idea.boldedText();
-
-
-    //   splitted = Template.idea.splitted();
-      // console.log(splitted);
-    //   //if (splitted !== undefined) {
-    //     return splitted[0].substr(80);
-    //   //}
-    // },
-    // nontitle: function() {
-    //   return this.splitted()[1];
-    // }
   })
 
   Template.idea.events({
@@ -77,15 +64,30 @@ if (Meteor.isClient) {
     }
   })
 
+  Template.idea_board.created = function() {
+
+    Deps.autorun(function() {
+      // This find() can be any reactive datasource
+      var ideas = Ideas.find(Session.get("current_idea")).fetch();
+
+      // If the filter already exists just update the dataset
+      if (typeof ideaFilter === 'object' && ideaFilter !== null) {
+        ideaFilter.updateDataset('text', ideas);
+      } 
+      else {
+        // Otherwise initialize the filter
+        ideaFilter = new DatasetFilter({
+                            dataset: ideas,
+                            queryKey: 'text'
+                    });
+      }
+    });
+  }
+
   Template.idea_board.helpers({
     filtered_ideas: function() {
-      query = Session.get("current_idea");
-      if (Session.get("search_input")) {
-        query.text = {"$regex": Session.get("search_input")}
-      }
-      // console.log('query',query);
-      // console.log(Ideas.find(query, {"$sort": {"$natural": -1}}).fetch());
-      return Ideas.find(query, {"$sort": {"$natural": -1}});
+      console.log(ideaFilter.getResults());
+      return ideaFilter.getResults();
     },
 
     breadcrumb: function() {
@@ -102,7 +104,12 @@ if (Meteor.isClient) {
   Template.idea_board.events({
     'keyup': function () {
       // increment the counter when button is clicked
-      Session.set("search_input", $('input[name=search]').val());
+      ideaFilter.setQuery($('input[name=search]').val());
     }
   });
+
+  Template.idea_board.destroyed = function() {
+    ideaFilter.destroy();
+    ideaFilter = null;
+  }
 }
