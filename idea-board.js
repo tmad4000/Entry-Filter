@@ -76,7 +76,7 @@ if (Meteor.isClient) {
       }
       else {
         query = Session.get("current_idea");
-        query.text = {"$regex": Session.get("search_input")}
+        query.text = {"$regex": new RegExp(Session.get("search_input"), 'i')}
         var searchedIdeas = Ideas.find(query, {"$sort": {"$natural": -1}}).fetch();
         allIdeas.forEach(function(idea, i) {
           idea.hidden = 'hidden';
