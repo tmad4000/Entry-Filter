@@ -1,20 +1,22 @@
 <template name="idea">
 <div class="ideaContainer {{hidden}}">
-<a href="/idea/{{id}}" data-idea-id="{{_id}}" class="subideas">::subideas::</a>
-<div class="idea">{{{bolded_text}}}</div>
-
+  <a href="/idea/{{id}}" data-idea-id="{{_id}}" class="subideas">::subideas::</a>
+  <div class="idea">{{{bolded_text}}}</div>
+  <div class="date">{{formatDate}} </div>
 </div>
 </template>
 
 <template name="idea_form">
   <form>
-    <input type="text" name="idea_text"> New Idea
+  New Idea
+    <textarea class="idea_text"> </textarea> 
+    <input type="submit"> 
   </form>
 </template>
 
 <template name="idea_board">
   
-  <div>current idea: {{breadcrumb}}</div>
+  <div>Current idea: {{breadcrumb}}</div>
   <input type="text" name="search"> Search
   {{> idea_form}}
   <ul>

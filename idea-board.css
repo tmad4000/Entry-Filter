@@ -2,7 +2,14 @@
 .idea {
   display: inline-block;
 }
+.date {
+	float: right;
+	color: gray;
+}
 
+.ideaContainer {
+	width: 70%;
+}
 a.subideas{
   text-decoration: none;
   color:blue;

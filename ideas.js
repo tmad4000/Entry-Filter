@@ -647,6 +647,9 @@ if (Meteor.isServer) {
             ideas.forEach(function(idea) {
                 idea["relations"] = {};
                 idea["parent_id"] = root_id;
+                idea["date_created"] = new Date().getTime();
+                idea["status"] = 0; 
+
                 Ideas.insert(idea);
             });
        }

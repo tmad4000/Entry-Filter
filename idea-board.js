@@ -4,6 +4,10 @@ if (Meteor.isClient) {
   Session.setDefault("current_idea", {parent_id: null});
 
   Template.idea.helpers({
+    formatDate: function() {
+      return moment(this.date_created).format('MMM Do, YYYY');
+    },
+
     bolded_text: function() {
       text = this.text;
       search_input = Session.get("search_input");
@@ -55,9 +59,15 @@ if (Meteor.isClient) {
   Template.idea_form.events({
     'submit': function(event) {
       event.preventDefault();
-      $input = $('input[name=idea_text')
+      $input = $('.idea_text'); 
+      var ideaData = {
+        text: $input.val(),
+        parent_id: Session.get("current_idea")["parent_id"], 
+        date_created: new Date().getTime(),
+        status: 0 // open, pending, rejected, filled
+      };
+      Ideas.insert(ideaData);
 
-      Ideas.insert({text: $input.val(), parent_id: Session.get("current_idea")["parent_id"]});
 
       $input.val('');
     }
@@ -65,7 +75,7 @@ if (Meteor.isClient) {
 
   Template.idea_board.helpers({
     ideas: function() {
-      var allIdeas = Ideas.find(Session.get("current_idea")).fetch();
+      var allIdeas = Ideas.find(Session.get("current_idea"), {sort: {date_created: -1}}).fetch();
       var allObjects = {};
       allIdeas.forEach(function(idea, i) {
         allObjects[idea._id] = i;
@@ -77,7 +87,7 @@ if (Meteor.isClient) {
       else {
         query = Session.get("current_idea");
         query.text = {"$regex": new RegExp(Session.get("search_input"), 'i')}
-        var searchedIdeas = Ideas.find(query, {"$sort": {"$natural": -1}}).fetch();
+        var searchedIdeas = Ideas.find(query, {sort: {date_created: -1}}).fetch();
         allIdeas.forEach(function(idea, i) {
           idea.hidden = 'hidden';
           allIdeas[i] = idea;
