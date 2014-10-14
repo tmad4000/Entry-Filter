@@ -1,6 +1,6 @@
 <template name="idea">
 <div class="ideaContainer {{hidden}}">
-  <a href="/idea/{{id}}" data-idea-id="{{_id}}" class="subideas">::subideas::</a>
+  <a href="{{_id}}" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a> 
   <div class="idea">{{{bolded_text}}}</div>
   <div class="date">{{formatDate}} </div>
 </div>
@@ -8,21 +8,35 @@
 
 <template name="idea_form">
   <form>
-  New Idea
-    <textarea class="idea_text"> </textarea> 
+    <textarea placeholder="Describe yourself here..." class="idea_text"> </textarea> 
     <input type="submit"> 
   </form>
 </template>
 
 <template name="idea_board">
   
-  <div>Current idea: {{breadcrumb}}</div>
+  <div>Path: 
+  <a href="/">Root</a>
+  {{#if breadcrumb}}
+    {{#each breadcrumb}} &gt; 
+      {{#unless last}}<a class="breadcrumb" href="{{_id}}" data-idea-id="{{_id}}">{{title}}</a>
+      {{else}}<b>{{title}}</b>{{/unless}}
+    {{/each}} 
+  {{/if}}
+
+  </div>
   <input type="text" name="search"> Search
   {{> idea_form}}
   <ul>
+
+  {{#if ideas}}
     {{#each ideas}}
       {{> idea}}
     {{/each}}
+  {{else}}
+      0 ideas.
+  {{/if}}
+
   </ul>
 </template>
 

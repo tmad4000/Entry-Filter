@@ -1,8 +1,60 @@
-if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault("counter", 0);
-  Session.setDefault("current_idea", {parent_id: null});
+  // path: '/posts/:file(*)'
+  /*
+  Router.map(function() {
+    // Home Route
+    this.route('home', {path: '/'}); 
 
+*/
+
+Router.map(function(){
+  this.route('', {
+    path: '/',
+    data: function(){
+      Router.go('/idea/')
+    }
+  });
+
+
+
+
+  this.route('idea_board', {
+    path: '/idea/:_id(*)',
+    data: function() {
+      var path = this.params._id.split("/");
+      var idea_id = path[path.length-1];
+      var current_idea;
+      if(idea_id === ''){
+        idea_id = null;
+        current_idea = {_id: null}
+      }
+      else {
+        current_idea = Ideas.findOne({_id: idea_id});
+      }
+
+
+      Session.set("current_idea", current_idea);
+    }
+  })
+
+  /*
+  Router.route('/idea/:_id(*)', function () {
+    var path = this.params._id.split("/");
+    console.log(path)
+    var idea_id = path[path.length-1];
+    var idea = Items.findOne({_id: idea_id});
+    Session.set("current_idea", idea);
+    this.render('idea_board');
+  });*/
+});
+
+
+if (Meteor.isClient) {
+
+  Session.setDefault("current_idea", {_id: null});
+
+  
+
+  
   Template.idea.helpers({
     formatDate: function() {
       return moment(this.date_created).format('MMM Do, YYYY');
@@ -48,11 +100,15 @@ if (Meteor.isClient) {
 
   Template.idea.events({
     'click a': function(event) {
-      event.preventDefault();
-      filter = Session.get("current_idea");
+      // https://github.com/EventedMind/iron-location
+      // history.pushState({}, '', $(event.target).attr("href"));
+      // return false;
+
+      //event.preventDefault();
+      /* filter = Session.get("current_idea");
       filter = {};
       filter['parent_id'] = $(event.target).data("idea-id");
-      Session.set("current_idea", filter);
+      Session.set("current_idea", filter); */
     }
   })
 
@@ -61,11 +117,16 @@ if (Meteor.isClient) {
       event.preventDefault();
       $input = $('.idea_text'); 
       var ideaData = {
-        text: $input.val(),
+        text: $input.val().trim(),
         parent_id: Session.get("current_idea")["parent_id"], 
         date_created: new Date().getTime(),
         status: 0 // open, pending, rejected, filled
       };
+
+      //#validate #hack?
+      if(!ideaData.text)
+        return; 
+
       Ideas.insert(ideaData);
 
 
@@ -75,17 +136,20 @@ if (Meteor.isClient) {
 
   Template.idea_board.helpers({
     ideas: function() {
-      var allIdeas = Ideas.find(Session.get("current_idea"), {sort: {date_created: -1}}).fetch();
+      var allIdeas = Ideas.find({parent_id: Session.get("current_idea")._id}, {sort: {date_created: -1}}).fetch();
       var allObjects = {};
       allIdeas.forEach(function(idea, i) {
+        idea.children=Ideas.find({parent_id:idea._id}, {sort: {date_created: -1}}).fetch();
+        idea.numChildren=idea.children.length;
+        
         allObjects[idea._id] = i;
       });
+
       if (!Session.get('search_input')) {
-        console.log('here');
         return allIdeas;
       }
       else {
-        query = Session.get("current_idea");
+        query = {parent_id: Session.get("current_idea")._id};
         query.text = {"$regex": new RegExp(Session.get("search_input"), 'i')}
         var searchedIdeas = Ideas.find(query, {sort: {date_created: -1}}).fetch();
         allIdeas.forEach(function(idea, i) {
@@ -97,14 +161,42 @@ if (Meteor.isClient) {
           var ideaIndex = allObjects[sidea._id];
           var idea = allIdeas[ideaIndex]; 
           idea.hidden = '';
+        
           allIdeas[ideaIndex] = idea;
+
         });
+
         return allIdeas
       }
     },
 
     breadcrumb: function() {
-      return Session.get("current_idea").parent_id;
+
+      var breadcrumb=[];
+      
+      var currentIdeaIter=Session.get("current_idea");
+
+      while(currentIdeaIter!==undefined && currentIdeaIter["_id"]!==null && currentIdeaIter["_id"] !== undefined) {
+        currentIdeaIter.title=currentIdeaIter.text.substr(0,50);
+
+        breadcrumb.unshift(currentIdeaIter);
+
+        var parentIdea=Ideas.findOne({_id:currentIdeaIter["parent_id"]});
+        currentIdeaIter=parentIdea;
+      } 
+      breadcrumb[breadcrumb.length-1].last = true;
+
+      //for(var parent=Session.get("current_idea");parent!==null; parent=Ideas.find({_id:parent["parent_id"]})) {
+
+      // }
+      return breadcrumb;
+
+      // if(parentIdea!==undefined) {
+      //   return parentIdea.text.substr(0,50);
+      // }
+      // else {
+      //   return "";
+      // }
     }
   });
 
@@ -112,6 +204,11 @@ if (Meteor.isClient) {
     'keyup': function () {
       // increment the counter when button is clicked
       Session.set("search_input", $('input[name=search]').val());
+    },
+
+    'a.breadcrumb click': function(){
+      // history.pushState({}, '', $(event.target).attr("href"));
+      // return false;
     }
   });
 }
