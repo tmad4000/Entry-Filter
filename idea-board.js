@@ -18,17 +18,22 @@ Router.map(function(){
 
 
   this.route('idea_board', {
-    path: '/idea/:_id(*)',
+    path: '/idea/:slug(*)',
     data: function() {
-      var path = this.params._id.split("/");
-      var idea_id = path[path.length-1];
-      var current_idea;
-      if(idea_id === ''){
-        idea_id = null;
-        current_idea = {_id: null}
+      var path = this.params.slug.split("/");
+
+      if(path.length<=1) {
+        idea_slug = null;
+        current_idea = {_id:null,slug: null}
       }
       else {
-        current_idea = Ideas.findOne({_id: idea_id});
+        var idea_slug = path[path.length-2];
+        var current_idea;
+        if(idea_slug === ''){
+        }
+        else {
+          current_idea = Ideas.findOne({slug: idea_slug});
+        }
       }
 
 
@@ -46,6 +51,8 @@ Router.map(function(){
     this.render('idea_board');
   });*/
 });
+
+
 
 
 if (Meteor.isClient) {
@@ -112,23 +119,20 @@ if (Meteor.isClient) {
     }
   })
 
+
+
   Template.idea_form.events({
     'submit': function(event) {
       event.preventDefault();
       $input = $('.idea_text'); 
       var ideaData = {
         text: $input.val().trim(),
-        parent_id: Session.get("current_idea")["parent_id"], 
+        parent_id: Session.get("current_idea")["_id"], 
         date_created: new Date().getTime(),
         status: 0 // open, pending, rejected, filled
       };
 
-      //#validate #hack?
-      if(!ideaData.text)
-        return; 
-
-      Ideas.insert(ideaData);
-
+      insertIdea(ideaData);
 
       $input.val('');
     }
@@ -177,14 +181,23 @@ if (Meteor.isClient) {
       var currentIdeaIter=Session.get("current_idea");
 
       while(currentIdeaIter!==undefined && currentIdeaIter["_id"]!==null && currentIdeaIter["_id"] !== undefined) {
-        currentIdeaIter.title=currentIdeaIter.text.substr(0,50);
-
         breadcrumb.unshift(currentIdeaIter);
 
         var parentIdea=Ideas.findOne({_id:currentIdeaIter["parent_id"]});
         currentIdeaIter=parentIdea;
       } 
-      breadcrumb[breadcrumb.length-1].last = true;
+
+      breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
+
+      for(var i=1;i<breadcrumb.length;i++) {
+        breadcrumb[i].path=breadcrumb[i-1].path+breadcrumb[i].slug+"/";
+      }
+
+
+      if(breadcrumb.length > 0) {
+        breadcrumb[breadcrumb.length-1].last = true;
+      }
+
 
       //for(var parent=Session.get("current_idea");parent!==null; parent=Ideas.find({_id:parent["parent_id"]})) {
 

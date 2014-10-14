@@ -640,17 +640,43 @@ var ideas = [
 Ideas = new Meteor.Collection("ideas");
 // Ideas.remove();
 
+
+insertIdea = function(ideaData){
+
+    //#validate #hack?
+    if(!ideaData.text)
+      return; 
+
+    ideaData.title=ideaData.text.substr(0,50);
+
+    var initSlug = ideaData.title.toLowerCase().replace(/ /g,'-').replace(/[^a-z0-9\-]/gi, '');
+
+
+    var slug = initSlug;
+    for (var n = 2; Ideas.find({slug: slug}).fetch().length > 0; ++n) {
+      slug = initSlug + "-" + n;
+      // #future Will be slow if many slug collisions
+    }
+
+    ideaData.slug=slug;
+
+    return Ideas.insert(ideaData);
+}
+
+
 if (Meteor.isServer) {
+
     Meteor.startup(function() {
+        Ideas.remove({})
        if (Ideas.find().count() === 0) {
-            root_id = Ideas.insert({text: "Hackathon Ideas"});
+            root_id = insertIdea({text: "Hackathon Ideas"});
             ideas.forEach(function(idea) {
                 idea["relations"] = {};
                 idea["parent_id"] = root_id;
                 idea["date_created"] = new Date().getTime();
                 idea["status"] = 0; 
 
-                Ideas.insert(idea);
+                insertIdea(idea);
             });
        }
     });
