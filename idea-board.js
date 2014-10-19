@@ -60,12 +60,7 @@ if (Meteor.isClient) {
   Session.setDefault("current_idea", {_id: null});
 
   
-  
-
-
-
-  
-  Template.idea.helpers({
+  var ideaHelpers={
     formatDate: function() {
       return moment(this.date_created).format('MMM Do, YYYY');
     },
@@ -105,9 +100,6 @@ if (Meteor.isClient) {
       if (splitted !== undefined) {
         return splitted[0];
       }
-      else {
-        return ""
-      }
     },
 
     relations: function() {
@@ -116,52 +108,19 @@ if (Meteor.isClient) {
           console.log(relIdea)
           return {targetIdea:relIdea , weight: i};
       });
-    },
-/*
-    breadcrumb: function() {
-
-      var breadcrumb=[];
-      
-      var currentIdeaIter=this;
-
-      while(currentIdeaIter!==undefined && currentIdeaIter["_id"]!==null && currentIdeaIter["_id"] !== undefined) {
-        breadcrumb.unshift(currentIdeaIter);
-
-        var parentIdea=Ideas.findOne({_id:currentIdeaIter["parent_id"]});
-        currentIdeaIter=parentIdea;
-      } 
-
-      breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
-
-      for(var i=1;i<breadcrumb.length;i++) {
-        breadcrumb[i].path=breadcrumb[i-1].path+breadcrumb[i].slug+"/";
-      }
-
-
-      if(breadcrumb.length > 0) {
-        breadcrumb[breadcrumb.length-1].last = true;
-      }
-
-
-      //for(var parent=Session.get("current_idea");parent!==null; parent=Ideas.find({_id:parent["parent_id"]})) {
-
-      // }
-      return breadcrumb;
-
-      // if(parentIdea!==undefined) {
-      //   return parentIdea.text.substr(0,50);
-      // }
-      // else {
-      //   return "";
-      // }
     }
-*/
 
-  })
-
+  }
 
 
 
+  
+  Template.idea.helpers(ideaHelpers)
+
+  ideaHelpers['weight']=function() {
+
+  }
+  Template.relIdea.helpers(ideaHelpers)
 
   Template.idea.events({
     'click a': function(event) {
@@ -232,10 +191,35 @@ if (Meteor.isClient) {
       }
     },
 
-
     breadcrumb: function() {
 
-      return [] //Session.get("current_idea") //.breadcrumb;
+      var breadcrumb=[];
+      
+      var currentIdeaIter=Session.get("current_idea");
+
+      while(currentIdeaIter!==undefined && currentIdeaIter["_id"]!==null && currentIdeaIter["_id"] !== undefined) {
+        breadcrumb.unshift(currentIdeaIter);
+
+        var parentIdea=Ideas.findOne({_id:currentIdeaIter["parent_id"]});
+        currentIdeaIter=parentIdea;
+      } 
+
+      breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
+
+      for(var i=1;i<breadcrumb.length;i++) {
+        breadcrumb[i].path=breadcrumb[i-1].path+breadcrumb[i].slug+"/";
+      }
+
+
+      if(breadcrumb.length > 0) {
+        breadcrumb[breadcrumb.length-1].last = true;
+      }
+
+
+      //for(var parent=Session.get("current_idea");parent!==null; parent=Ideas.find({_id:parent["parent_id"]})) {
+
+      // }
+      return breadcrumb;
 
       // if(parentIdea!==undefined) {
       //   return parentIdea.text.substr(0,50);

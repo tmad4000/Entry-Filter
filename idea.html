@@ -1,29 +1,21 @@
 <template name="idea">
+<div class="ideaContainer {{hidden}}">
 
-{{#unless displayMini}}
-  <div class="ideaContainer {{hidden}}">
-
-    <div class="idea">{{{bolded_text}}}</div>
-    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
-    <div class="date right">{{formatDate}} </div>
-    <div class="related">{{title}}
-        {#each relations}}
-            {{> relation}}
-        {/each}} 
-   </div>
-  </div>
-{{else}}
-  <a href="/idea{{path}}">
-     {{title}} 
-  </a>
-{{/unless}}
+  <div class="idea">{{{bolded_text}}}</div>
+  <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+  <div class="date right">{{formatDate}} </div>
+  <div class="related">
+      {{#each relations}}
+          {{> relIdea}}
+      {{/each}} 
+ </div>
+</div>
 </template>
 
-<template name="relation">
-  {{#with targetIdea}}
-    {{> idea displayMini=true}}
-  {{/with}}
-
+<template name="relIdea">
+  <a href="/idea{{targetIdea.path}}">
+     {{targetIdea.title}} 
+  </a>
   ({{weight}})
 </template>
 
