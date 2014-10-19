@@ -22,3 +22,7 @@ a.subideas:hover {
   display: none;
 }
 
+.relatedIdea {
+	border: 1px #ccc solid;
+}
+

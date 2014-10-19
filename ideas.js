@@ -1,4 +1,4 @@
-
+//Ideas.update({_id: "iN9whhZMNjJ4e4wPy"}, {$set: {relatedIdeas: {}});
 var ideas = [
     {
         "author": "", 
