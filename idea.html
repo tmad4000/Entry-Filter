@@ -1,22 +1,27 @@
 <template name="idea">
-<div class="ideaContainer {{hidden}}">
-
-  <div class="idea">{{{bolded_text}}}</div>
-  <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
-  <div class="date right">{{formatDate}} </div>
-  <div class="related">
-      {{#each relations}}
-          {{> relIdea}}
-      {{/each}} 
- </div>
-</div>
+<li class="ideaContainer {{hidden}}">
+  <div class="idea-body">
+    <div class="idea">{{{bolded_text}}}</div>
+    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+    <div class="date right">{{formatDate}} </div>
+    <div class="relations">
+        {{#each relations}}
+            {{> relation}}
+        {{/each}} 
+   </div>
+  </div>
+  <div class="idea-related">
+    {{> ideaList ideas=expandedIdeas}}
+  </div>
+</li>
 </template>
 
-<template name="relIdea">
-  <a href="/idea{{targetIdea.path}}">
+<template name="relation">
+  <span class="relation"><a href="#" data-id="{{targetIdea._id}}">
      {{targetIdea.title}} 
   </a>
   ({{weight}})
+</span>
 </template>
 
 
@@ -27,6 +32,8 @@
     <input type="submit"> 
   </form>
 </template>
+
+
 
 <template name="idea_board">
   
@@ -40,17 +47,24 @@
     </div>
     <div> <input type="text" name="search"> Search</div>  
   
-  {{> idea_form}}
+    {{> idea_form}}
+    
+    {{> ideaList ideas=ideas}}
   </div>
-  <ul>
+  
+</template>
 
-  {{#if ideas}}
-    {{#each ideas}}
-      {{> idea}}
-    {{/each}}
-  {{else}}
-      0 ideas.
-  {{/if}}
+
+<template name="ideaList">
+  <ul class="idea-list">
+
+    {{#if ideas}}
+      {{#each ideas}}
+        {{> idea}}
+      {{/each}}
+    {{else}}
+        0 ideas.
+    {{/if}}
 
   </ul>
 </template>

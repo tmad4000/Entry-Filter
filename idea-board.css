@@ -34,13 +34,13 @@ a.subideas:hover {
   display: none;
 }
 
-.relatedIdea {
+.relation {
+	
+	margin-right: 5px;
+	padding:0 3px;
 	border: 1px #ccc solid;
 }
 
-.related a {
-	border:1px #ccc solid;
-	margin-right: 5px;
-	padding:0 3px;
+.relation a {
 	text-decoration: none;
 }

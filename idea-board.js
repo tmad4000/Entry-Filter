@@ -80,7 +80,7 @@ if (Meteor.isClient) {
         delims = ['--',':'];
         titleTxt = this.text.substr(0,80);
         for(i in delims) {
-          titleTxt=titleTxt.substr(0,indexOf(delims[i]));
+          titleTxt= Txt.substr(0,indexOf(delims[i]));
         }
 
         return {
@@ -104,12 +104,15 @@ if (Meteor.isClient) {
 
     relations: function() {
       return _.map(this.relations, function(i, k) {
-        var relIdea=Ideas.findOne({_id:k});
-          console.log(relIdea)
-          return {targetIdea:relIdea , weight: i};
+        var relation=Ideas.findOne({_id:k});
+          console.log(relation)
+          return {targetIdea:relation , weight: i};
       });
-    }
+    },
 
+    expandedIdeas: function() {
+      return Template.instance().expandedIdeas
+    }
   }
 
 
@@ -117,13 +120,16 @@ if (Meteor.isClient) {
   
   Template.idea.helpers(ideaHelpers)
 
-  ideaHelpers['weight']=function() {
 
-  }
-  Template.relIdea.helpers(ideaHelpers)
+  Template.relation.helpers(ideaHelpers)
 
   Template.idea.events({
-    'click a': function(event) {
+    'click .relation>a': function(event) {
+      var idToExpand=event.target.data("id");
+      console.log(idToExpand)
+      Template.instance().expandedIdeas.push(Ideas.findOne({_id:idToExpand}))
+    },
+    // 'click a': function(event) {
       // https://github.com/EventedMind/iron-location
       // history.pushState({}, '', $(event.target).attr("href"));
       // return false;
@@ -133,7 +139,7 @@ if (Meteor.isClient) {
       filter = {};
       filter['parent_id'] = $(event.target).data("idea-id");
       Session.set("current_idea", filter); */
-    }
+    // }
   })
 
 
