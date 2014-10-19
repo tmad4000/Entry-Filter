@@ -1,10 +1,33 @@
 <template name="idea">
-<div class="ideaContainer {{hidden}}">
-  <a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a> 
-  <div class="idea">{{{bolded_text}}}</div>
-  <div class="date">{{formatDate}} </div>
-</div>
+
+{{#unless displayMini}}
+  <div class="ideaContainer {{hidden}}">
+
+    <div class="idea">{{{bolded_text}}}</div>
+    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+    <div class="date right">{{formatDate}} </div>
+    <div class="related">
+        {{#each relations}}
+            {{> relation}}
+        {{/each}} 
+   </div>
+  </div>
+{{else}}
+  <a href="/idea{{path}}">
+     {{title}} 
+  </a>
+{{/unless}}
 </template>
+
+<template name="relation">
+  {{#with targetIdea}}
+    {{> idea displayMini=true}}
+  {{/with}}
+
+  ({{weight}})
+</template>
+
+
 
 <template name="idea_form">
   <form>

@@ -8,3 +8,12 @@ Has code for:
 
 http://ideaflowmin.meteor.com/idea/
 https://github.com/tmad4000/Entry-Filter/tree/better-rendering
+
+
+
+==Installation==
+meteor create Entry-Filter
+copy git source into it
+
+meteor add mrt:moment
+meteor add iron:router
