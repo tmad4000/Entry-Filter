@@ -100,12 +100,13 @@ if (Meteor.isClient) {
     },
 
     title: function() {
-      console.log(Template.idea);
-      console.log(Template.instance());
       splitted = Template.idea.splitted();
       // console.log(splitted);
       if (splitted !== undefined) {
         return splitted[0];
+      }
+      else {
+        return ""
       }
     },
 
@@ -116,7 +117,7 @@ if (Meteor.isClient) {
           return {targetIdea:relIdea , weight: i};
       });
     },
-
+/*
     breadcrumb: function() {
 
       var breadcrumb=[];
@@ -154,7 +155,7 @@ if (Meteor.isClient) {
       //   return "";
       // }
     }
-
+*/
 
   })
 
@@ -231,9 +232,10 @@ if (Meteor.isClient) {
       }
     },
 
+
     breadcrumb: function() {
 
-      return Session.get("current_idea").breadcrumb;
+      return [] //Session.get("current_idea") //.breadcrumb;
 
       // if(parentIdea!==undefined) {
       //   return parentIdea.text.substr(0,50);
