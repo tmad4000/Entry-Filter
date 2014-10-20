@@ -11,6 +11,7 @@
    </div>
   </div>
   <div class="idea-related">
+    {{expandedIdeas}}
     {{> ideaList ideas=expandedIdeas}}
   </div>
 </li>
@@ -46,10 +47,17 @@
 
     </div>
     <div> <input type="text" name="search"> Search</div>  
-  
-    {{> idea_form}}
+
+      {{> idea_form}}
+
+  <div>
+      {{#if ideas}}
+          {{> ideaList ideas=ideas}}
+      {{else}}
+           0 ideas.
+    {{/if}}
+  </div>
     
-    {{> ideaList ideas=ideas}}
   </div>
   
 </template>
@@ -58,13 +66,11 @@
 <template name="ideaList">
   <ul class="idea-list">
 
-    {{#if ideas}}
+
       {{#each ideas}}
         {{> idea}}
       {{/each}}
-    {{else}}
-        0 ideas.
-    {{/if}}
+
 
   </ul>
 </template>

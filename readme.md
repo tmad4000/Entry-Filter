@@ -17,3 +17,4 @@ copy git source into it
 
 meteor add mrt:moment
 meteor add iron:router
+meteor add reactive-var

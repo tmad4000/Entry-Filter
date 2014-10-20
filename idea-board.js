@@ -111,7 +111,9 @@ if (Meteor.isClient) {
     },
 
     expandedIdeas: function() {
-      return Template.instance().expandedIdeas
+            console.log("gfhgfh",Template.instance().expandedIdeas.get());
+
+      return Template.instance().expandedIdeas.get();
     }
   }
 
@@ -123,11 +125,17 @@ if (Meteor.isClient) {
 
   Template.relation.helpers(ideaHelpers)
 
+  Template.idea.created=function() {
+    this.expandedIdeas=new ReactiveVar([], arrayEqual);
+  }
+
   Template.idea.events({
     'click .relation>a': function(event) {
-      var idToExpand=event.target.data("id");
-      console.log(idToExpand)
-      Template.instance().expandedIdeas.push(Ideas.findOne({_id:idToExpand}))
+
+      var idToExpand=$(event.target).data("id");
+      Template.instance().expandedIdeas.get().push(Ideas.findOne({_id:idToExpand}))
+      console.log(Template.instance().expandedIdeas.get());
+
     },
     // 'click a': function(event) {
       // https://github.com/EventedMind/iron-location
@@ -253,4 +261,9 @@ if (Meteor.isClient) {
           return {key: k, value: i};
       });
   });
+
+  function arrayEqual(a1, a2){
+    _.isEmpty(_.difference(array1, array2))
+  }
+
 }
