@@ -11,18 +11,19 @@
    </div>
   </div>
   <div class="idea-related">
-    {{expandedIdeas}}
     {{> ideaList ideas=expandedIdeas}}
   </div>
 </li>
 </template>
 
 <template name="relation">
-  <span class="relation"><a href="#" data-id="{{targetIdea._id}}">
-     {{targetIdea.title}} 
-  </a>
-  ({{weight}})
-</span>
+ 
+    <span class="relation"><a href="#" data-id="{{targetIdea._id}}">
+       {{targetIdea.title}} 
+    </a>
+    ({{weight}})
+  </span>
+
 </template>
 
 

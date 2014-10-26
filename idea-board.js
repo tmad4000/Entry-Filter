@@ -4,42 +4,42 @@
     // Home Route
     this.route('home', {path: '/'}); 
 
-*/
+    */
 
-Router.map(function(){
-  this.route('', {
-    path: '/',
-    data: function(){
-      Router.go('/idea/')
-    }
-  });
-
-
-
-
-  this.route('idea_board', {
-    path: '/idea/:slug(*)',
-    data: function() {
-      var path = this.params.slug.split("/");
-
-      if(path.length<=1) {
-        idea_slug = null;
-        current_idea = {_id:null,slug: null}
-      }
-      else {
-        var idea_slug = path[path.length-2];
-        var current_idea;
-        if(idea_slug === ''){
+    Router.map(function(){
+      this.route('', {
+        path: '/',
+        data: function(){
+          Router.go('/idea/')
         }
-        else {
-          current_idea = Ideas.findOne({slug: idea_slug});
+      });
+
+
+
+
+      this.route('idea_board', {
+        path: '/idea/:slug(*)',
+        data: function() {
+          var path = this.params.slug.split("/");
+
+          if(path.length<=1) {
+            idea_slug = null;
+            current_idea = {_id:null,slug: null}
+          }
+          else {
+            var idea_slug = path[path.length-2];
+            var current_idea;
+            if(idea_slug === ''){
+            }
+            else {
+              current_idea = Ideas.findOne({slug: idea_slug});
+            }
+          }
+
+
+          Session.set("current_idea", current_idea);
         }
-      }
-
-
-      Session.set("current_idea", current_idea);
-    }
-  })
+      })
 
   /*
   Router.route('/idea/:_id(*)', function () {
@@ -55,47 +55,47 @@ Router.map(function(){
 
 
 
-if (Meteor.isClient) {
+  if (Meteor.isClient) {
 
-  Session.setDefault("current_idea", {_id: null});
+    Session.setDefault("current_idea", {_id: null});
 
-  
-  var ideaHelpers={
-    formatDate: function() {
-      return moment(this.date_created).format('MMM Do, YYYY');
-    },
 
-    bolded_text: function() {
-      text = this.text;
-      search_input = Session.get("search_input");
-      if (search_input) {
-        text = text.replace(new RegExp('<b>', 'gi'), '');
-        text = text.replace(new RegExp('</b>', 'gi'), '');
-        text = text.replace(new RegExp("(" + search_input + ")", 'gi'), '<b>$1</b>');
-      }
-      return text;
-    },
-    splitted: function() {
-      if (this.text !== undefined) {
-        delims = ['--',':'];
-        titleTxt = this.text.substr(0,80);
-        for(i in delims) {
-          titleTxt= Txt.substr(0,indexOf(delims[i]));
+    var ideaHelpers={
+      formatDate: function() {
+        return moment(this.date_created).format('MMM Do, YYYY');
+      },
+
+      bolded_text: function() {
+        text = this.text;
+        search_input = Session.get("search_input");
+        if (search_input) {
+          text = text.replace(new RegExp('<b>', 'gi'), '');
+          text = text.replace(new RegExp('</b>', 'gi'), '');
+          text = text.replace(new RegExp("(" + search_input + ")", 'gi'), '<b>$1</b>');
         }
+        return text;
+      },
+      splitted: function() {
+        if (this.text !== undefined) {
+          delims = ['--',':'];
+          titleTxt = this.text.substr(0,80);
+          for(i in delims) {
+            titleTxt= Txt.substr(0,indexOf(delims[i]));
+          }
 
-        return {
-                title: titleTxt,
-                nontitle: this.text.substr(titleTxt.length)
-              };
-      }
-    },
+          return {
+            title: titleTxt,
+            nontitle: this.text.substr(titleTxt.length)
+          };
+        }
+      },
 
-    hidden: function() {
-      return this.hidden;
-    },
+      hidden: function() {
+        return this.hidden;
+      },
 
-    title: function() {
-      splitted = Template.idea.splitted();
+      title: function() {
+        splitted = Template.idea.splitted();
       // console.log(splitted);
       if (splitted !== undefined) {
         return splitted[0];
@@ -105,13 +105,13 @@ if (Meteor.isClient) {
     relations: function() {
       return _.map(this.relations, function(i, k) {
         var relation=Ideas.findOne({_id:k});
-          console.log(relation)
-          return {targetIdea:relation , weight: i};
+        console.log(relation)
+        return {targetIdea:relation , weight: i};
       });
     },
 
     expandedIdeas: function() {
-            console.log("gfhgfh",Template.instance().expandedIdeas.get());
+      console.log("gfhgfh",Template.instance().expandedIdeas.get());
 
       return Template.instance().expandedIdeas.get();
     }
@@ -122,21 +122,55 @@ if (Meteor.isClient) {
   
   Template.idea.helpers(ideaHelpers)
 
+  //#future #refactor
+  // var relationHelpers = ideaHelpers;
+  // relationHelpers.expandedRelation=function(parentContext) {
+  //   return parentContext.isExpanded(this.id)
+  // }
+
+  // Template.relation.helpers(relationHelpers)
 
   Template.relation.helpers(ideaHelpers)
 
   Template.idea.created=function() {
-    this.expandedIdeas=new ReactiveVar([], arrayEqual);
+    this.expandedIdeas=new ReactiveVar([]);
   }
 
   Template.idea.events({
     'click .relation>a': function(event) {
+      var $targetLink=$(event.target)
+      var idToExpand=$targetLink.data("id");
 
-      var idToExpand=$(event.target).data("id");
-      Template.instance().expandedIdeas.get().push(Ideas.findOne({_id:idToExpand}))
-      console.log(Template.instance().expandedIdeas.get());
 
-    },
+
+      var expandedIdeas=Template.instance().expandedIdeas
+      var expandedIdeasRay=expandedIdeas.get()
+      console.log("asdf",_.findWhere(expandedIdeasRay,{_id: idToExpand}))
+
+
+      var idExpanded=false
+      var i 
+      for( i = 0; i < expandedIdeasRay.length; i++){
+        if(expandedIdeasRay[i]._id === idToExpand){
+          idExpanded = true;
+          break;
+        }
+      }
+
+      if(idExpanded){
+
+        $targetLink.parent().removeClass("expanded"); //#hack
+        expandedIdeasRay.splice(i, 1);
+        expandedIdeas.set(expandedIdeasRay);
+      } else {
+        $targetLink.parent().addClass("expanded"); //#hack
+        expandedIdeasRay.unshift(Ideas.findOne({_id:idToExpand}));
+        expandedIdeas.set(expandedIdeasRay);
+    }
+    console.log(Template.instance().expandedIdeas.get());
+
+
+  },
     // 'click a': function(event) {
       // https://github.com/EventedMind/iron-location
       // history.pushState({}, '', $(event.target).attr("href"));
@@ -149,6 +183,8 @@ if (Meteor.isClient) {
       Session.set("current_idea", filter); */
     // }
   })
+
+
 
 
 
@@ -196,7 +232,7 @@ if (Meteor.isClient) {
           var ideaIndex = allObjects[sidea._id];
           var idea = allIdeas[ideaIndex]; 
           idea.hidden = '';
-        
+
           allIdeas[ideaIndex] = idea;
 
         });
@@ -257,9 +293,9 @@ if (Meteor.isClient) {
   });
 
   UI.registerHelper('addKeys', function (all) {
-      return _.map(all, function(i, k) {
-          return {key: k, value: i};
-      });
+    return _.map(all, function(i, k) {
+      return {key: k, value: i};
+    });
   });
 
   function arrayEqual(a1, a2){

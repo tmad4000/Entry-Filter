@@ -34,13 +34,23 @@ a.subideas:hover {
   display: none;
 }
 
-.relation {
-	
+.relation{	
 	margin-right: 5px;
 	padding:0 3px;
 	border: 1px #ccc solid;
+	color:gray;
 }
 
 .relation a {
 	text-decoration: none;
+}
+
+
+.relation.expanded {
+	color:black;
+	border: 1px black solid;
+}
+
+.relation.expanded a {
+	color:black;
 }
