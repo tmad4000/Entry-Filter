@@ -96,23 +96,46 @@
 
       title: function() {
         splitted = Template.idea.splitted();
-      // console.log(splitted);
       if (splitted !== undefined) {
         return splitted[0];
       }
     },
 
     relations: function() {
-      return _.map(this.relations, function(i, k) {
-        var relation=Ideas.findOne({_id:k});
-        console.log(relation)
-        return {targetIdea:relation , weight: i};
+      return _.map(this.relations, function(val, key) {
+        var relation=Ideas.findOne({_id:key});
+        return {targetIdea:relation , weight: val.weight};
+      });
+    },
+    confirmedRelations: function() {
+
+      var confirmedRelations={}
+      for (key in this.relations) {
+          if (!this.relations[key].unconfirmed)
+            confirmedRelations[key] = this.relations[key];
+      }
+
+      return _.map(confirmedRelations, function(val, key) {
+        var relation=Ideas.findOne({_id:key});
+        console.log(confirmedRelations);
+        return {targetIdea:relation , weight: val.weight, unconfirmed:val.unconfirmed};
+      });
+    },    
+
+    suggestedRelations: function() {
+      var unconfirmedRelations={}
+      for (key in this.relations) {
+          if (this.relations[key].unconfirmed)
+            unconfirmedRelations[key] = this.relations[key];
+      }
+
+      return _.map(unconfirmedRelations, function(val, key) {
+        var relation=Ideas.findOne({_id:key});
+        return {targetIdea:relation , weight: val.weight, unconfirmed:val.unconfirmed};
       });
     },
 
     expandedIdeas: function() {
-      console.log("gfhgfh",Template.instance().expandedIdeas.get());
-
       return Template.instance().expandedIdeas.get();
     }
   }
@@ -123,14 +146,56 @@
   Template.idea.helpers(ideaHelpers)
 
   //#future #refactor
-  // var relationHelpers = ideaHelpers;
+  var relationHelpers = ideaHelpers;
+  relationHelpers.suggestedRelation=function() {
+    return true;
+  }
   // relationHelpers.expandedRelation=function(parentContext) {
   //   return parentContext.isExpanded(this.id)
   // }
 
-  // Template.relation.helpers(relationHelpers)
+  Template.relation.helpers(relationHelpers)
 
-  Template.relation.helpers(ideaHelpers)
+  Template.relation.events({
+
+  'click .relation .deny': function(event) {
+      console.log("relid",this.targetIdea._id)
+      // Ideas.update({_id:this._id},{$set: {"relatedIdeas."+this.targetIdea._id: {unconfirmed:false}})
+
+    },
+  'click .relation .confirm': function(event) {
+      console.log("relid",this.targetIdea._id)
+     // Ideas.update({_id:this._id},{$set: {"relatedIdeas.".concat(this.targetIdea._id): {unconfirmed:false}}})
+    //   var $targetLink=$(event.target)
+    //   var idToExpand=$targetLink.data("id");
+
+
+
+    //   var expandedIdeas=Template.instance().expandedIdeas
+    //   var expandedIdeasRay=expandedIdeas.get()
+
+    //   var idExpanded=false
+    //   var i 
+    //   for( i = 0; i < expandedIdeasRay.length; i++){
+    //     if(expandedIdeasRay[i]._id === idToExpand){
+    //       idExpanded = true;
+    //       break;
+    //     }
+    //   }
+
+    //   if(idExpanded){
+
+    //     $targetLink.parent().removeClass("expanded"); //#hack
+    //     expandedIdeasRay.splice(i, 1);
+    //     expandedIdeas.set(expandedIdeasRay);
+    //   } else {
+    //     $targetLink.parent().addClass("expanded"); //#hack
+    //     expandedIdeasRay.unshift(Ideas.findOne({_id:idToExpand}));
+    //     expandedIdeas.set(expandedIdeasRay);
+    // }
+
+  }
+})
 
   Template.idea.created=function() {
     this.expandedIdeas=new ReactiveVar([]);
@@ -145,8 +210,6 @@
 
       var expandedIdeas=Template.instance().expandedIdeas
       var expandedIdeasRay=expandedIdeas.get()
-      console.log("asdf",_.findWhere(expandedIdeasRay,{_id: idToExpand}))
-
 
       var idExpanded=false
       var i 
@@ -167,8 +230,6 @@
         expandedIdeasRay.unshift(Ideas.findOne({_id:idToExpand}));
         expandedIdeas.set(expandedIdeasRay);
     }
-    console.log(Template.instance().expandedIdeas.get());
-
 
   },
     // 'click a': function(event) {

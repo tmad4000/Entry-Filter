@@ -54,3 +54,12 @@ a.subideas:hover {
 .relation.expanded a {
 	color:black;
 }
+
+.confirm {
+	color:green;
+}
+
+.deny {
+	color:red; 
+	font-weight:bold;
+}

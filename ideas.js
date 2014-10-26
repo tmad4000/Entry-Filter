@@ -692,8 +692,8 @@ if (Meteor.isServer) {
             }
 
             sampleIdea["relations"] = {}
-            sampleIdea["relations"][iray[4]]=1
-            sampleIdea["relations"][iray[5]]=1
+            sampleIdea["relations"][iray[4]]={weight:1, unconfirmed:true}
+            sampleIdea["relations"][iray[5]]={weight:1, unconfirmed:false}
 
 
             sampleIdea["parent_id"] = root_id;
