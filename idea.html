@@ -1,0 +1,88 @@
+<template name="idea">
+<li class="ideaContainer {{hidden}}">
+  <div class="idea-body">
+    <div class="idea">{{{bolded_text}}}</div>
+    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+    <div class="date right">{{formatDate}} </div>
+    <div class="relations">
+        {{#each manuallyReviewedRelations}}
+            {{> relation}}
+        {{/each}} 
+        {{#each suggestedRelations}}
+            {{> relation}}
+        {{/each}} 
+   </div>
+  </div>
+  <div class="idea-related">
+    {{> ideaList ideas=expandedIdeas}}
+  </div>
+</li>
+</template>
+
+<template name="relation">
+ 
+    <span class="relation">
+    {{#unless reviewed}}
+      <span>
+        <a href="#" class="confirm">&#10004; </a>
+        <a href="#" class="deny">&times; </a>
+      </span>
+    {{/unless}}
+     <a href="#" data-id="{{targetIdea._id}}">
+       {{targetIdea.title}} 
+    </a>
+    ({{weight}})
+  </span>
+
+</template>
+
+
+
+<template name="idea_form">
+  <form>
+    <textarea placeholder="Add idea here..." class="idea_text"> </textarea> 
+    <input type="submit"> 
+  </form>
+</template>
+
+
+
+<template name="idea_board">
+  
+  <div>
+    <div>Path: 
+      {{#each breadcrumb}} 
+        {{#unless last}}<a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a>  &gt;
+        {{else}}<b>{{title}}</b>{{/unless}}
+      {{/each}} 
+
+    </div>
+    <div> <input type="text" name="search"> Search</div>  
+
+      {{> idea_form}}
+
+  <div>
+      {{#if ideas}}
+          {{> ideaList ideas=ideas}}
+      {{else}}
+           0 ideas.
+    {{/if}}
+  </div>
+    
+  </div>
+  
+</template>
+
+
+<template name="ideaList">
+  <ul class="idea-list">
+
+
+      {{#each ideas}}
+        {{> idea}}
+      {{/each}}
+
+
+  </ul>
+</template>
+

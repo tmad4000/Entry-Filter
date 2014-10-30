@@ -1,12 +1,65 @@
 /* CSS declarations go here */
 .idea {
-  display: inline-block;
+  display: inline;
+}
+.date {
+	color: gray;
+}
+
+
+
+.ideaContainer {
+	width: 70%;
+  	margin-bottom: 8px;
+}
+
+
+div.right {
+	float: right;
+	margin-left: 5px;
+}
+
+div.subideas {
 }
 
 a.subideas{
   text-decoration: none;
-  color:blue;
+  color:#ccc;
 }
 a.subideas:hover {
   color:gray;
+}
+
+.hidden {
+  display: none;
+}
+
+.relation{	
+	margin-right: 5px;
+	padding:0 3px;
+	border: 1px #ccc solid;
+	color:gray;
+}
+
+.relation a {
+	text-decoration: none;
+}
+
+
+.relation.expanded {
+	color:black;
+	border: 1px black solid;
+}
+
+.relation.expanded a {
+	color:black;
+}
+
+.confirm {
+	color:green;
+}
+
+.deny {
+	color:red; 
+	font-weight:bold;
 }
