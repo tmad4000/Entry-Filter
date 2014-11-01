@@ -374,6 +374,10 @@
       // else {
       //   return "";
       // }
+    },
+
+    isListView: function() {
+      return true;
     }
   });
 
