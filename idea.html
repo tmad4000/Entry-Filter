@@ -57,22 +57,36 @@
       {{/each}} 
 
     </div>
-    <div> <input type="text" name="search"> Search</div>  
-
-      {{> idea_form}}
-
-  <div>
-      {{#if ideas}}
-          {{> ideaList ideas=ideas}}
-      {{else}}
-           0 ideas.
-    {{/if}}
-  </div>
+    {{#if isListView}}
+      {{> listView ideas=ideas}}
+    {{else}}
+      {{> graphView ideas=ideas}}
+     {{/if}}
     
   </div>
   
 </template>
 
+<template name="listView">
+      <div id="list-view">
+        <div> <input type="text" name="search"> Search</div>  
+
+        {{> idea_form}}
+
+        <div>
+          {{#if ideas}}
+            {{> ideaList ideas=ideas}}
+          {{else}}
+            0 ideas.
+          {{/if}}
+        </div>
+      </div>
+</template>
+
+<template name="graphView">
+      <div id="graph-view">
+      </div>
+</template>
 
 <template name="ideaList">
   <ul class="idea-list">
