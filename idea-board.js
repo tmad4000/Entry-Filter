@@ -12,21 +12,13 @@ Router.route('/', function(){
     this.redirect('/idea/')
 });
 
-
-
 Router.route('/idea/:slug*', function() {
-  // if(this.originalUrl.slice(-1) != '/'){
-  //   this.redirect('/idea/'+ this.params.slug + '')
-  // }
-  
-
-    // console.log("real stuff")
     var current_idea;
     if(!this.params.slug) {
       current_idea = {_id:null,slug: null}
     } else {
       var path = this.params.slug.replace(/\/$/, '').split("/");
-      console.log(path)
+      
       var idea_slug = path[path.length-1];
       
       current_idea = Ideas.findOne({slug: idea_slug});
@@ -34,8 +26,6 @@ Router.route('/idea/:slug*', function() {
     Session.set("current_view", this.params.query.graph !== undefined? 'graph' : 'list')
     Session.set("current_idea", current_idea);
     this.render('idea_board')
-  
-
 
 });
 
@@ -397,9 +387,11 @@ Router.route('/idea/:_id(*)', function () {
 
 
   Template.graph.rendered = function () {
+    console.log(this)
+
     var svg, 
-        width = 500, 
-        height = 500;
+        width = 700, 
+        height = 700;
     
     var data = d3.range(100).map(function(i) {
       return {index: i};

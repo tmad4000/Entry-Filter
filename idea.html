@@ -20,11 +20,6 @@
 </template>
 
 
-<template name="graph">
-  test
-  <div id="viz"></div>
-</template>
-
 <template name="relation">
  
     <span class="relation">
@@ -113,8 +108,14 @@
 
 <template name="graphView">
       <div id="graph-view">
+
         {{> graph ideas=ideas}} 
+      
       </div>
+</template>
+
+<template name="graph">
+  <div id="viz"></div>
 </template>
 
 <template name="ideaList">
