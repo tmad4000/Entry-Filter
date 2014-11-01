@@ -82,27 +82,15 @@
   <div class="container">
     <div>
       <div>
-
-      <ol class="breadcrumb">
-        {{#each breadcrumb}} 
-          {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
-          {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
-        {{/each}} 
-      </ol>
-
+        <ol class="breadcrumb">
+          {{#each breadcrumb}} 
+            {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
+            {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
+          {{/each}} 
+        </ol>
       </div>
-
-        {{> idea_form}}
-
-    <div>
-        {{#if ideas}}
-            {{> ideaList ideas=ideas}}
-        {{else}}
-             0 ideas.
-      {{/if}}
     </div>
-      
-    </div>
+
     {{#if isListView}}
       {{> listView ideas=ideas}}
     {{else}}
@@ -114,19 +102,18 @@
 </template>
 
 <template name="listView">
-      <div id="list-view">
-        <div> <input type="text" name="search"> Search</div>  
+  <div id="list-view">
 
-        {{> idea_form}}
+    {{> idea_form}}
 
-        <div>
-          {{#if ideas}}
-            {{> ideaList ideas=ideas}}
-          {{else}}
-            0 ideas.
-          {{/if}}
-        </div>
-      </div>
+    <div>
+      {{#if ideas}}
+        {{> ideaList ideas=ideas}}
+      {{else}}
+        0 ideas.
+      {{/if}}
+    </div>
+  </div>
 </template>
 
 <template name="graphView">
