@@ -106,17 +106,6 @@
   </div>
 </template>
 
-<template name="graphView">
-      <div id="graph-view">
-
-        {{> graph ideas=ideas}} 
-      
-      </div>
-</template>
-
-<template name="graph">
-  <div id="viz"></div>
-</template>
 
 <template name="ideaList">
   <ul class="idea-list">
@@ -130,3 +119,19 @@
   </ul>
 </template>
 
+<template name="graphView">
+      <div id="graph-view">
+
+        {{> graph ideas=ideas}} 
+      
+      </div>
+</template>
+
+<template name="graph">
+  <div id="viz" class="col-sm-7"></div>
+  <div class="col-sm-4 col-sm-offset-1">
+    <div class="well">
+      test
+    </div>
+  </div>
+</template>

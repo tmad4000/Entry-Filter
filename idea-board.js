@@ -387,64 +387,59 @@ Router.route('/idea/:_id(*)', function () {
 
 
   Template.graph.rendered = function () {
-    console.log(this)
-
     var svg, 
         width = 700, 
         height = 700;
-    
-    var data = d3.range(100).map(function(i) {
-      return {index: i};
+    Tracker.autorun(function () {
+      var id = Session.get("current_idea");
+      console.log(id, 'current idea id')
+      var ideas = Ideas.find(
+        { parent_id: id._id }, 
+        {sort: {date_created: -1}}
+      ).fetch();
+
+      var data = ideas.map(function(e){
+        return {index: e.date_created}
+      })
+
+      var fill = d3.scale.category10();
+      console.log(ideas)
+
+      function tick(e) {
+        node.attr("cx", function(d) { return d.x; })
+            .attr("cy", function(d) { return d.y; });
+      }
+
+
+
+      var force = d3.layout.force()
+        .nodes(data)
+        .size([width, height])
+        .on("tick", tick)
+        .start();
+
+
+
+      svg = d3.select('#viz').append('svg')
+        .attr('width', width)
+        .attr('height', height);
+
+      var node = svg.selectAll(".node")
+        .data(data)
+      .enter().append("circle")
+        .attr("class", "node")
+        .attr("cx", function(d) { return d.x; })
+        .attr("cy", function(d) { return d.y; })
+        .attr("r", 8)
+        .style("fill", function(d, i) { return fill(i & 3); })
+        .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); });
+
+      force.resume()
+
+
     });
-    // var data = Ideas.find(
-    //   {sort: {date_created: -1}})
-    // .fetch().map(function(e, i){
-    //   return {index: i}
-    // })
 
-    var fill = d3.scale.category10();
-
-    function tick(e) {
-
-      // Push different nodes in different directions for clustering.
-      var k = 6 * e.alpha;
-      data.forEach(function(o, i) {
-        o.y += i & 1 ? k : -k;
-        o.x += i & 2 ? k : -k;
-      });
-
-      node.attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; });
-    }
-
-
-
-    var force = d3.layout.force()
-      .nodes(data)
-      .size([width, height])
-      .on("tick", tick)
-      .start();
-
-
-    svg = d3.select('#viz').append('svg')
-      .attr('width', width)
-      .attr('height', height);
-
-    var node = svg.selectAll(".node")
-      .data(data)
-    .enter().append("circle")
-      .attr("class", "node")
-      .attr("cx", function(d) { return d.x; })
-      .attr("cy", function(d) { return d.y; })
-      .attr("r", 8)
-      .style("fill", function(d, i) { return fill(i & 3); })
-      .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); });
-
-    force.resume()
-
-
-
-
+    
 
 
     // Circles.find().observe({

@@ -33,14 +33,20 @@ a.subideas{
 }
 
 .relation{	
-	margin-right: 5px;
-	padding:0 3px;
-	border: 1px #ccc solid;
-	color:gray;
+	border: 1px solid lightgray;
+	/* color: gray; */
+	margin: 0px 4px 2px 0px;
+	background: white;
+	padding: 0px 5px 0px 5px;
+	border-radius: 3px;
+	/* font-size: 12px; */
+	-webkit-transition: all 0.3s linear;
+	display: inline-block;
 }
 
 .relation a {
 	text-decoration: none;
+	
 }
 
 

@@ -667,7 +667,7 @@ insertIdea = function(ideaData){
 if (Meteor.isServer) {
 
     Meteor.startup(function() {
-        Ideas.remove({})
+        //Ideas.remove({})
 
 
         iray=[]
