@@ -24,11 +24,9 @@ div.subideas {
 
 a.subideas{
   text-decoration: none;
-  color:#ccc;
+  
 }
-a.subideas:hover {
-  color:gray;
-}
+
 
 .hidden {
   display: none;

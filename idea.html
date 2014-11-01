@@ -2,7 +2,7 @@
   <li class="ideaContainer {{hidden}}">
     <div class="idea-body">
       <div class="idea">{{{bolded_text}}}</div>
-      <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+      <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas label label-primary">subideas <span>({{numChildren}})</span></a></div>
       <div class="date right">{{formatDate}} </div>
       <div class="relations">
           {{#each manuallyReviewedRelations}}
@@ -55,7 +55,7 @@
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
+        <a class="navbar-brand" href="/"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
