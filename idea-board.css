@@ -55,11 +55,11 @@ a.subideas:hover {
 	color:black;
 }
 
-.confirm {
+.relation a.confirm {
 	color:green;
 }
 
-.deny {
+.relation a.deny {
 	color:red; 
 	font-weight:bold;
 }
