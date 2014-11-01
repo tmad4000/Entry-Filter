@@ -110,7 +110,7 @@ Router.route('/idea/:_id(*)', function () {
 
       return _.map(manuallyReviewedRelations, function(val, key) {
         var relation=Ideas.findOne({_id:key});
-        console.log(manuallyReviewedRelations);
+        // console.log(manuallyReviewedRelations);
         return {targetIdea:relation , weight: val.weight, reviewed:val.reviewed};
       });
     },    
@@ -392,15 +392,39 @@ Router.route('/idea/:_id(*)', function () {
         height = 700;
     Tracker.autorun(function () {
       var id = Session.get("current_idea");
+      if(!id) return;
+
       console.log(id, 'current idea id')
       var ideas = Ideas.find(
         { parent_id: id._id }, 
         {sort: {date_created: -1}}
       ).fetch();
 
-      var data = ideas.map(function(e){
-        return {index: e.date_created}
-      })
+      // #future for related ideas outside current scope
+      // var related_ids = _.uniq(_.flatten(ideas.map(function(e){
+      //   return Object.keys(e.relations)
+      // })));
+
+      // var related_ideas = Ideas.find({_id: {$in: related_ids}}).fetch();
+      // console.log('related idea', related_ideas, related_ids);
+
+      var indexmap = {};
+      var data = ideas.map(function(e, i){
+        indexmap[e._id] = i;
+        return { index: i, weight: 1 }
+      });
+      
+      
+      var links = _.flatten(ideas.map(function(idea, i){
+        return Object.keys(idea.relations).filter(function(relative){
+          return relative in indexmap
+        }).map(function(relative){
+          return {
+            source: i,
+            target: indexmap[relative]
+          }
+        })
+      }));
 
       var fill = d3.scale.category10();
       console.log(ideas)
@@ -408,12 +432,19 @@ Router.route('/idea/:_id(*)', function () {
       function tick(e) {
         node.attr("cx", function(d) { return d.x; })
             .attr("cy", function(d) { return d.y; });
+
+        link.attr("x1", function(d) { return d.source.x; })
+            .attr("y1", function(d) { return d.source.y; })
+            .attr("x2", function(d) { return d.target.x; })
+            .attr("y2", function(d) { return d.target.y; });
+
       }
 
 
 
       var force = d3.layout.force()
         .nodes(data)
+        .links(links)
         .size([width, height])
         .on("tick", tick)
         .start();
@@ -424,6 +455,11 @@ Router.route('/idea/:_id(*)', function () {
         .attr('width', width)
         .attr('height', height);
 
+
+      var link = svg.selectAll(".link").data(links)
+        .enter().append("line")
+        .attr("class", "link")
+        
       var node = svg.selectAll(".node")
         .data(data)
       .enter().append("circle")
@@ -433,6 +469,7 @@ Router.route('/idea/:_id(*)', function () {
         .attr("r", 8)
         .style("fill", function(d, i) { return fill(i & 3); })
         .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); });
+    
 
       force.resume()
 
