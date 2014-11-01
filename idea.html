@@ -1,32 +1,28 @@
 <template name="idea">
-
-<li class="ideaContainer {{hidden}}">
-  <div class="idea-body">
-    <div class="idea">{{{bolded_text}}}</div>
-    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
-    <div class="date right">{{formatDate}} </div>
-    <div class="relations">
-        {{#each manuallyReviewedRelations}}
-            {{> relation}}
-        {{/each}} 
-        {{#each suggestedRelations}}
-            {{> relation}}
-        {{/each}} 
-   </div>
-  </div>
-  <div class="idea-related">
-    {{> ideaList ideas=expandedIdeas}}
-  </div>
-</li>
+  <li class="ideaContainer {{hidden}}">
+    <div class="idea-body">
+      <div class="idea">{{{bolded_text}}}</div>
+      <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
+      <div class="date right">{{formatDate}} </div>
+      <div class="relations">
+          {{#each manuallyReviewedRelations}}
+              {{> relation}}
+          {{/each}} 
+          {{#each suggestedRelations}}
+              {{> relation}}
+          {{/each}} 
+     </div>
+    </div>
+    <div class="idea-related">
+      {{> ideaList ideas=expandedIdeas}}
+    </div>
+  </li>
 </template>
 
 
 <template name="graph">
-  <svg id="vthings" width="500" height="500">
-    {{#each vthings}}
-      {{> vthing}}
-    {{/each}}
-  </svg>
+  test
+  <div id="viz"></div>
 </template>
 
 <template name="relation">
@@ -67,8 +63,8 @@
         <a class="navbar-brand" href="#"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
       </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Board View</a></li>
-        <li><a href="#">Graph View</a></li>
+        <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
+        <li class="{{#unless isListView}}active{{/unless}}"><a href="?graph">Graph View</a></li>
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -103,7 +99,6 @@
 
 <template name="listView">
   <div id="list-view">
-
     {{> idea_form}}
 
     <div>
@@ -118,6 +113,7 @@
 
 <template name="graphView">
       <div id="graph-view">
+        {{> graph ideas=ideas}} 
       </div>
 </template>
 
