@@ -1,4 +1,5 @@
 <template name="idea">
+
 <li class="ideaContainer {{hidden}}">
   <div class="idea-body">
     <div class="idea">{{{bolded_text}}}</div>
@@ -17,6 +18,15 @@
     {{> ideaList ideas=expandedIdeas}}
   </div>
 </li>
+</template>
+
+
+<template name="graph">
+  <svg id="vthings" width="500" height="500">
+    {{#each vthings}}
+      {{> vthing}}
+    {{/each}}
+  </svg>
 </template>
 
 <template name="relation">
@@ -39,36 +49,59 @@
 
 
 <template name="idea_form">
-  <form>
-    <textarea placeholder="Add idea here..." class="idea_text"> </textarea> 
-    <input type="submit"> 
+  <form  role="form" >
+    <div class="form-group">
+      <textarea placeholder="Add idea here..." class="idea_text form-control"></textarea> 
+    </div>
+    <input type="submit"  class="btn btn-default"> 
   </form>
+  <hr>
 </template>
 
 
 
 <template name="idea_board">
-  
-  <div>
-    <div>Path: 
-      {{#each breadcrumb}} 
-        {{#unless last}}<a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a>  &gt;
-        {{else}}<b>{{title}}</b>{{/unless}}
-      {{/each}} 
-
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Board View</a></li>
+        <li><a href="#">Graph View</a></li>
+      </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search"  name="search">
+        </div>
+      </form>
     </div>
-    <div> <input type="text" name="search"> Search</div>  
+  </nav>
 
-      {{> idea_form}}
+  <div class="container">
+    <div>
+      <div>
 
-  <div>
-      {{#if ideas}}
-          {{> ideaList ideas=ideas}}
-      {{else}}
-           0 ideas.
-    {{/if}}
-  </div>
-    
+      <ol class="breadcrumb">
+        {{#each breadcrumb}} 
+          {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
+          {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
+        {{/each}} 
+      </ol>
+
+      </div>
+
+        {{> idea_form}}
+
+    <div>
+        {{#if ideas}}
+            {{> ideaList ideas=ideas}}
+        {{else}}
+             0 ideas.
+      {{/if}}
+    </div>
+      
+    </div>
   </div>
   
 </template>

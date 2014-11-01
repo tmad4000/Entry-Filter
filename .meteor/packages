@@ -10,4 +10,5 @@ rosh93:dataset-filter
 mrt:moment
 iron:router
 reactive-var
+d3
 
