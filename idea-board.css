@@ -32,6 +32,11 @@ a.subideas{
   stroke-width: 1.5px;
 }
 
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
 .hidden {
   display: none;
 }
