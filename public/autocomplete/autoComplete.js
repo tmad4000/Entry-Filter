@@ -33,7 +33,7 @@ Template.entryAutoComplete.created = function() {
 
 
 Template.entryAutoComplete.helpers({
-  filteredMit: function() {
+  filteredIdeas: function() {
     var t = Template.instance();
     var input = t.input.get();
     if (t.lastSearch === input) {
@@ -42,8 +42,8 @@ Template.entryAutoComplete.helpers({
     t.lastSearch = input;
     var query = {'searchCache': {$regex: input, $options: 'i'}};
     var data = {type: this.id, query: query};
-    // console.log('filtered', Meteor.call('mitSearch', data));
-    Meteor.call('mitSearch', data, function(e, options) {
+    // console.log('filtered', Meteor.call('ideaSearch', data));
+    Meteor.call('ideaSearch', data, function(e, options) {
       t.options = options;
       t.optionsDep.changed();
     });
@@ -67,7 +67,7 @@ Template.entryAutoComplete.helpers({
     }
     return 'hidden';
   },
-  showMitSearch: function(which) {
+  showideaSearch: function(which) {
     // console.log('showFacSearch');
     var t = Template.instance();
     if (t.input.get() && t.active.get()) {

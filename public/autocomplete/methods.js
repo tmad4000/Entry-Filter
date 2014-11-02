@@ -80,8 +80,8 @@ Meteor.methods({
     console.log(findUserByEmail(email)._id);
     callback(findUserByEmail(email)._id);
   },
-  'mitSearch': function(data) {
-    console.log('mitSearch');
+  'ideaSearch': function(data) {
+    console.log('ideaSearch');
     data.query.emailAddress = {$nin: ['']};
     var fields = {};
     fields.firstName = 1;

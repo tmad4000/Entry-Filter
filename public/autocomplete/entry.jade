@@ -70,8 +70,8 @@ template(name='inputRow')
 template(name='entryAutoComplete')
   input(class='autoCompEntry newEntry#{id}' id='#{id}' type='text' value='{{getDefaultVal}}' autocomplete='off')
   .error.small(class='#{showError}') Please select an option from the dropdown menu.
-  .autoFaculty(class='{{showMitSearch}}')
-    each filteredMit
+  .autoFaculty(class='{{showideaSearch}}')
+    each filteredIdeas
       .filtFac {{{searchCacheBold}}}
 
 template(name='entriesList')
