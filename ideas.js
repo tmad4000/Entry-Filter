@@ -667,13 +667,14 @@ insertIdea = function(ideaData){
 if (Meteor.isServer) {
 
     Meteor.startup(function() {
-        // Ideas.remove({})
+        Ideas.remove({})
 
 
         iray=[]
        if (Ideas.find().count() === 0) {
             root_id = insertIdea({text: "Hackathon Ideas"});
             ideas.forEach(function(idea) {
+                idea["searchCache"] = idea["text"];
                 idea["relations"] = {};
                 idea["parent_id"] = root_id;
                 idea["date_created"] = new Date().getTime();
