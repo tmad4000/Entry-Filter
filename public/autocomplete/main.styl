@@ -1,0 +1,1135 @@
+/* CSS declarations go here */
+// grid
+
+@import "2_grid"
+@import "3_mixins"
+
+
+
+columns = 16
+column-width = 60px
+gutter-width = 0px
+total-width = 100%
+lightPurpleColor = #1CAFC4
+darkPurple = #106470
+darkPurpleAlpha = rgba(16,100,112, .85)
+darkerPurple = #0D5059
+darkerPurpleAlpha = rgba(13,80,89, .85)
+borderColor = #8A9599
+linkColor = #149BCC
+grayColor = #8A9599
+lightGrayColor = #B3C2C7
+darkGrayColor = #333738
+darkBackGroundColor2 = #e4e4e4
+backgroundColor = #cdcdcd
+darkBackGroundColor = #cccccc
+darkBackGroundColorAlpha = rgba(204, 204, 204, .65)
+redColor = #CC2509
+// redDesatColor = #CC7364
+redDesatColor = #CC8478
+lightBlueColor = #106470
+jacobBlueColor = #ACD8E6
+orangeColor = #9C9564
+
+//////////////////////////////// 
+//////// Global Styles /////////
+////////////////////////////////
+img
+  width 100%
+  vertical-align top
+
+.hidden
+  display none !important
+
+.noDisplay
+  visibility hidden !important
+
+.clearfix
+  clearfix()
+
+a
+  color linkColor
+  text-decoration none
+
+b
+  // font-size 1.2em
+  // font-weight bold
+  background-color darkPurple
+  color darkBackGroundColor2
+
+
+textarea,
+input
+  font-size 13px
+  font-family "AvenirNextLTW01-Regular", "Lato", "Trebuchet MS", Helvetica, sans-serif
+
+a:hover
+  text-decoration underline
+
+//////////////////////////////// 
+///////// Page Styles //////////
+////////////////////////////////
+html
+body 
+  position relative
+  width 100%
+  min-width 300px
+  max-width 100%
+  margin 0
+  padding 0
+  min-height 750px
+  height 100% !important
+  background-color backgroundColor
+  font-family "AvenirNextLTW01-Regular", "Lato", "Trebuchet MS", Helvetica, sans-serif
+  // color darkPurple
+
+body.overlaid
+  overflow hidden
+
+#overlayWrapper
+  padding-top 60px
+  box-sizing()
+  width 100%
+
+#overlayWrapper.fixed
+  height 100%
+  position fixed
+  top 0
+  left 0
+  overflow hidden
+  pointer-events none
+
+.header
+  min-width 1320px
+  position fixed
+  top 0 
+  left 0
+  background-color darkPurple
+  // background-color darkPurpleAlpha
+  width 100%
+  z-index 20
+  // border-bottom 1px solid darkPurple
+  // my-box-shadow(darkPurple)
+  clear both
+
+#headerTitle
+  font-family: Helvetica
+
+.headerLabel
+  padding 13px 13px 9px
+  color jacobBlueColor
+  font-size 20px
+  float left
+  // border-right 1px solid darkerPurple
+  border-bottom 4px solid darkPurple
+  box-sizing()
+
+.headerLabel.active
+  border-bottom 4px solid white
+  color white
+
+.headerLabel:hover
+  color white
+  border-bottom 4px solid white
+  text-decoration none
+
+.headerLabel.classmit 
+  color jacobBlueColor
+  margin-right 30px
+
+
+.headerLabel.classmit:hover 
+  border-bottom 4px solid darkPurple
+  pointer auto
+  
+// #searchSection:hover
+//   background-color yellow
+  
+
+#searchSection
+  inline-block()
+  box-sizing()
+  position relative // searchBarOptions
+
+input#searchBar
+  height 45px
+  width 390 - 42px
+  // margin-left 42px
+  border none
+  box-sizing()
+  padding 10px
+  padding-right 40px
+  background-color darkerPurple
+  background-color darkerPurpleAlpha
+  color jacobBlueColor
+  font-size 16px
+
+#searchBarOptions
+  position absolute
+  top 0
+  left 0px
+  height 45px
+  width 42px
+  box-sizing()
+  background-color darkerPurple
+  cursor pointer
+  color white
+
+#searchBarIcon
+  position absolute
+  right 0
+  top 0
+  font-size 25px
+  padding 10px
+  text-align center
+  color jacobBlueColor
+
+.searchBarOptionsWrapper
+  text-align center
+  height 45px
+  width 42px
+  margin 0 auto
+  font-size 40px
+  display table-cell
+  vertical-align middle
+
+#tagsSection
+  margin-top 10px
+
+#tagIcon
+  background-color darkerPurple
+  inline-block()
+  cursor pointer
+
+#tagSection
+  inline-block()
+
+.tag
+  inline-block()
+  padding 5px
+  padding-right 25px // 20px for x button, 5px normal
+  border 2px solid white 
+  text-transform uppercase
+  position relative
+  color white
+  border-radius 5px
+
+.tag:after
+  content 'x'
+  position absolute
+  top 0
+  right 0
+  box-sizing()
+  // background-color yellow
+  padding 5px
+
+
+.tag.specialTag
+  padding-left 28px // 23px for box, 5px normal padding
+
+.tag.specialTag:before
+  position absolute
+  top 0
+  left 0
+  box-sizing()
+  // background-color yellow
+  padding 5px
+
+
+.tag.personTag:before
+  content '@'
+  // background-color red
+
+.tag.hashTag:before
+  content '#'
+  // background-color green
+
+.rightHeaderLink
+  float right
+  padding 13px
+  cursor pointer
+  color jacobBlueColor
+  box-sizing()
+  font-size 20px
+  font-family 'Avenir Next W01 Thin'
+
+.rightHeaderLink:hover
+  background-color darkerPurple
+
+.rightHeaderLink:active
+  background-color darkPurple
+
+#plusButton
+  inline-block()
+
+#newPostText
+  text-transform uppercase
+  inline-block()
+  
+#userSection
+  float right
+  padding 13px
+  position relative // notificationBubble
+
+#userName
+  text-transform uppercase
+  max-width 130px
+  ellipsis()
+  cursor pointer
+
+#notificationBubble
+  height 20px
+  width 20px
+  background-color yellow
+  border-radius 100%
+  position absolute
+  top 5px
+  right 5px
+  cursor pointer
+
+#notificationBubbleText
+  text-align center
+  margin-top 2.5px
+
+//////////////////////////////// 
+//////// SignUp Styles /////////
+////////////////////////////////
+.forgotPassContainer 
+  display none
+
+
+.forgotPassContainer.show 
+  display block
+
+
+.signUpTitle
+  margin-bottom 20px
+  font-size 1.2em
+
+.signInContainer 
+  column 11
+  padding 10px
+  box-sizing()
+  padding-right 20px
+
+
+.signUpContainer 
+  column 5
+  // background-color blue
+  padding 20px
+  box-sizing()
+  border-left 1px solid borderColor
+
+
+.landingContainer
+  width 600px
+  margin 0 auto
+  padding 20px
+  background-color darkBackGroundColor2
+  border 1px solid borderColor
+
+
+.formRow
+	padding 5px
+	position relative
+	width 100%
+	clearfix()
+	box-sizing()
+
+.formLeft
+	column 4
+
+.formLeft label
+  text-transform capitalize
+
+.formRight
+	column 12
+	position relative
+
+#signInForm
+	clearfix()
+	position relative
+
+.signInSpaceHack
+	height 50px
+	column 16
+
+input[type='text'],
+input[type='password']
+  height 43px 
+  font-size 15px
+  width 100%
+  max-width 300px
+  border 1px solid lightGrayColor
+  box-sizing()
+  padding 5px
+
+  
+
+.formLabel
+	padding-top 7.5px
+
+
+
+#signInButton
+	float right
+
+.signUpBackButton
+	float left
+
+.widthHack
+  width 300px
+  padding 0
+  margin 0
+
+   
+button.btn-submit
+  float right
+  padding 12.5px
+  box-sizing()
+  background-color darkPurple
+  margin-right -0.5px
+  color white !important
+  border none
+  // color darkPurple
+  // background-color #b3d3ff
+  font-size 1.05em
+
+button.btn-submit:hover
+  text-decoration underline
+  cursor pointer
+  
+
+.showForgotPassword
+	font-size 0.8em
+	padding 5px 0
+	float left
+
+#signInSpaceHack
+	height 15px
+
+.signUpRow
+	column 16
+	font-size 16px
+	text-align center
+	vertical-align middle
+
+.signUpRowText
+	margin 0 auto
+	padding 20px
+
+#signUpSectionTitle
+	padding-top 0
+	font-size 1.1em
+
+
+#signOut
+  color jacobBlueColor
+
+.certificateLink
+	text-decoration underline
+
+//////////////////////////////// 
+////// LargeEntry Styles ///////
+////////////////////////////////
+.overlay
+  position fixed
+  height 100%
+  width 100%
+  background-color rgba(0,0,0,50%)
+  top 0
+  left 0
+  z-index 21
+  overflow auto
+
+.largeEntryContainer
+  position absolute
+  width 100%
+  top 0
+  left 0
+  z-index 22
+  zoom-out()
+  overflow auto
+
+.largeEntrySection
+  position relative
+  top 0
+  left 0
+  width 1020px
+  margin 0 auto
+
+.largeEntry
+  position relative
+  z-index 23
+  width 700px
+  margin 20px 20px 20px 0
+  background-color white
+  border-radius 8px
+  padding 20px
+  cursor auto
+  inline-block()
+  box-sizing()
+
+  .description
+    word-wrap()
+    font-size 16px
+    line-height 24px
+    margin-bottom 30px
+
+  .title
+    font-size 24px
+    font-weight bold
+    line-height 30px
+    font-family 'AvenirNextLTW01-DemiCn'
+    color darkPurple
+
+  .advisor
+    margin 10px 0 25px
+
+  .advisor.supervisor
+    font-size 18px
+    
+  .advisor.supervisor:before
+    content 'Faculty: '
+
+
+.applicationSection
+  position relative
+  z-index 23
+  width 700px
+  margin 0 20px 20px 0
+  background-color white
+  border-radius 8px
+  padding 20px
+  cursor auto
+  inline-block()
+  box-sizing()
+
+  .title
+    font-size 20px
+    font-weight bold
+    max-width 550px
+    line-height 25px
+
+.applyContainerWrapper
+  position fixed
+  width 300px
+  border-radius 8px
+  overflow hidden
+  box-sizing()
+
+.applyContainer
+  position absolute
+  top 0px
+  right -320px
+  width 300px
+  border-radius 8px
+  overflow hidden
+  box-sizing()
+
+  .applyDescription
+    width 100%
+    padding 10px
+    box-sizing()
+    display block
+    border none !important
+    resize none
+    min-height 150px
+    margin 0
+    background-color white
+    font-size 13px
+    line-height 18px
+
+  .applyLink
+    width 100%
+    display block
+    border none
+    border-top 1px solid lightGrayColor
+    box-sizing()
+    padding 10px
+    margin 0
+    background-color white
+    font-size 13px
+
+  .applyBtn,
+  .removeBtn
+    font-family 'AvenirNextLTW01-DemiCn'
+    color white
+    background-color darkPurple
+    padding 10px
+    text-align center
+    cursor pointer
+
+  .acceptBtn,
+  .rejectBtn
+    font-family 'AvenirNextLTW01-DemiCn'
+    color white
+    background-color darkPurple
+    padding 10px
+    box-sizing()
+    inline-block()
+    column 8
+    text-align center
+    cursor pointer
+
+  .acceptBtn:hover,
+  .rejectBtn:hover
+    font-size 1.1em
+    
+
+  .applyStatus
+    font-family 'AvenirNextLTW01-DemiCn'
+    color white
+    background-color darkPurple
+    padding 10px
+    text-align center
+    text-transform capitalize
+
+//////////////////////////////// 
+/////// EntryList Styles ///////
+////////////////////////////////
+
+#entryGrid
+  box-sizing()
+  margin 0 auto
+  padding 0
+  // width 900px
+  clearfix()
+
+.gridColumn
+  width 315px
+  padding-right 15px
+  box-sizing()
+  float left
+
+.gridColumn.last
+  padding-right 0
+  width 300px
+
+.userInfo
+  width 300px
+  margin-bottom 15px
+  position relative
+  border-radius 3px
+  background-color darkBackGroundColor2
+  box-sizing()
+  my-box-shadow(#777777)
+  border-top 1px solid #BFBFBF
+
+  .userRow
+    box-sizing()
+    border-bottom 1px solid lightGrayColor
+    font-size 13px
+    line-height 18px
+    clearfix()
+    position relative
+
+  .title
+    ellipsis()
+    font-family 'AvenirNextLTW01-DemiCn'
+    text-align center
+    color white
+    background-color darkPurple
+    font-size 20px
+    line-height 26px
+    padding 10px
+    box-sizing()
+
+  .userLabel
+    padding 10px
+    font-weight bold
+    color darkPurple
+    column 8
+    box-sizing()
+
+  .userData
+    column 8
+    padding 10px
+    box-sizing()
+    // ellipsis()
+      
+  .userData.ellipsis
+    ellipsis()
+
+  .userData.withIcon
+    padding-right 33px
+
+  input.userData
+    border none
+    padding-right 33px
+    height 38px
+    column 16
+
+  .editIcon
+    position absolute
+    right 0
+    top 0
+    padding 10px
+    box-sizing()
+    color darkPurple
+    cursor pointer
+
+  .editIcon:hover
+    color black
+
+  .error
+    color red
+    background-color white
+    // height 43px
+    padding 5px
+    font-size 11px
+    box-sizing()
+    position relative
+    border-top 1px dashed lightGrayColor
+
+// good = linkColor
+// needs attention = yellowColor
+// cant get = redColor
+// default = grey
+.entryContainer.offered,
+.entryContainer.accepted
+  border-bottom 3px solid linkColor
+
+.entryContainer.pending,
+.entryContainer.applied
+  border-bottom 3px solid orangeColor
+
+.entryContainer.filled,
+.entryContainer.rejected
+  border-bottom 3px solid redDesatColor
+
+.entryContainer:hover > .buttonRow
+  display block !important
+
+.entryContainer
+  width 300px
+  background-color darkBackGroundColor2
+  margin-bottom 15px
+  border-radius 3px
+  padding 10px
+  position relative
+  box-sizing()
+  padding-bottom 15px
+  my-box-shadow(#777777)
+  border-top 1px solid #BFBFBF
+  border-bottom 3px solid lightGrayColor
+  zoom-in()
+  overflow hidden
+
+
+
+  
+  .title
+    // font-weight bold
+    font-size 20px
+    line-height 26px
+    cursor pointer
+    font-family 'AvenirNextLTW01-DemiCn'
+    color darkPurple
+    // text-transform capitalize
+
+  .advisor
+    margin-top 6px // should be 10px compensating for line-height
+    font-size 16px
+    line-height 20px
+    ellipsis()
+
+  .statusIndicator
+    width 25px
+    height 25px
+    position absolute
+    top 5px
+    right 5px
+    border 5px solid darkPurple
+    border-radius 100%
+
+  .description
+    line-height 18px
+    font-size 13px
+    margin 15px 0 30px
+    zoom-in()
+    position relative
+    word-wrap()
+    overflow hidden
+
+  .description.collapsed
+    max-height 160px
+    
+  .description:hover > .descriptionExpand
+    display none
+
+  .descriptionExpand
+    position absolute
+    bottom 0
+    right 0
+    content 'Expand'
+    padding 7.5px
+    color darkPurple
+    background-color white
+    border-radius 8px
+    cursor pointer
+    display none
+
+  .date
+    color grayColor
+    font-size 10px
+    position absolute
+    bottom 10px
+    left 10px
+
+  .types
+    color grayColor
+    font-size 10px
+    position absolute
+    bottom 10px
+    right 10px
+
+  .projTypes,
+  .credTypes
+    text-align right
+    line-height 12px
+
+  .smallIcon
+    font-size 13px
+    line-height 16px
+    inline-block()
+
+  .smallIcon.false
+    display none !important
+  
+  .glassOverlay
+    position absolute
+    left 0
+    bottom 40px
+    background-image url('/img/overlay3.png')
+    z-index 19
+    width 300px
+    height 250px
+    zoom-in()
+
+  .glassOverlay.collapsed
+    height 250px
+    display block
+
+  .glassOverlay.expanded
+    height auto
+    display none
+    
+  .buttonRow
+    position absolute
+    left 0
+    bottom 40px
+    z-index 19
+    border-bottom 1px solid darkBackGroundColor
+    border-top 1px solid darkBackGroundColor
+    display none
+  
+    
+.buttonRow .elem
+  padding 5px
+  box-sizing()
+  text-transform uppercase
+  float left
+  width 75px
+  text-align center
+  font-size 13px
+  cursor pointer
+  background-color darkBackGroundColor2
+  border-bottom 3px solid darkBackGroundColor2
+  color darkPurple
+  
+.buttonRow .elem:hover,
+.buttonRow .elem.dark:hover
+  // color lightPurpleColor
+  // border-bottom 3px solid lightPurpleColor
+  // background-color darkGrayColor
+  color darkGrayColor
+  border-bottom 3px solid darkGrayColor
+  
+  
+.buttonRow .elem.dark
+  background-color darkBackGroundColor
+  border-bottom 3px solid darkBackGroundColor
+  
+  
+.buttonRow .firstRow
+  padding-bottom 5px
+  box-sizing()
+  line-height 18px
+
+.buttonRow .elem.status.open
+  color lightGrayColor
+
+.buttonRow .elem.status.open:hover,
+.buttonRow .elem.status.pending:hover,
+.buttonRow .elem.status.applied:hover,
+.buttonRow .elem.status.offered:hover,
+.buttonRow .elem.status.accepted:hover,
+.buttonRow .elem.status.filled:hover,
+.buttonRow .elem.status.rejected:hover
+  border-bottom 3px solid darkBackGroundColor2
+
+.buttonRow .elem.status.pending,
+.buttonRow .elem.status.applied
+  color orangeColor
+
+.buttonRow .elem.status.offered,
+.buttonRow .elem.status.accepted
+  color linkColor
+
+.buttonRow .elem.status.filled,
+.buttonRow .elem.status.rejected
+  color redDesatColor
+
+.buttonRow .elem.status
+  cursor auto
+
+.buttonRow .icon
+  font-size 18px  
+  
+
+.wordcount
+  position absolute
+  right 5px
+  top 5px
+  color grayColor
+  font-weight bold
+
+.autoFaculty
+  position absolute
+  top 41px
+  left 0
+  z-index 50
+  width 400px
+  background-color white
+  color grayColor
+  height 400px
+  overflow auto
+  border 1px solid lightGrayColor
+
+.filtFac
+  border-bottom 1px solid lightGrayColor
+  padding 10px
+  box-sizing()
+  line-height 1.3em
+
+  b
+    font-weight bold
+    font-size 1em
+    color black
+
+.filtFac:hover
+  background-color backgroundColor
+  cursor pointer
+
+.filtFac.active
+  background-color backgroundColor
+
+.addEntryWrapper
+  position relative
+  top 0
+  left 0
+  width 100%
+  height 100%
+  z-index 19
+  background-color darkPurple
+  background-color darkPurpleAlpha
+  box-sizing()
+  padding-top 80px // headerHeight
+  padding-bottom 20px
+  overflow auto
+  zoom-out()
+  
+
+.addEntryContainer 
+  width 1020px
+  position relative
+  margin 0 auto 
+  // overflow scroll
+  z-index 20
+  background-color darkPurple
+  padding 20px
+  box-sizing()
+  color white
+  line-height 1.3em
+  my-box-shadow(darkerPurple)
+  border-top 1px solid #155F6A
+  margin-bottom 20px
+  border-radius 3px
+  cursor auto
+
+.addEntryTitle
+  font-size 1.4em
+  font-family 'AvenirNextLTW01-DemiCn'
+  margin-bottom 20px
+
+
+#credRow
+  margin-top 10px
+// .addEntryContainer .formRow
+//   border-top 1px solid darkerPurple
+
+.projTypeError
+  color red
+  background-color white
+  padding 10px
+  box-sizing()
+  inline-block()
+  border-left 5px solid darkerPurple
+
+.addEntryContainer .error
+  color red
+  background-color white
+  // height 43px
+  padding 5px
+  font-size 11px
+  box-sizing()
+  margin-top -1px
+  position relative
+  z-index 21
+  border 1px solid lightGrayColor
+  border-top 1px dashed lightGrayColor
+
+.addEntryContainer .error.small
+  max-width 300px
+
+.addEntryContainer .error.full
+  width 100%
+  
+
+.addEntryBtn
+  padding 10px
+  box-sizing()
+  inline-block()
+  margin-right 15px
+  cursor pointer
+  border-radius 3px
+  border 2px solid darkerPurple
+
+.addEntryBtn:hover
+  background-color darkerPurple
+  
+
+.addEntryBtn.active
+  border 2px solid white
+
+
+.interested
+	color black
+
+.newEntryDescription
+  width 100%
+  border 1px solid lightGrayColor
+  font-size 15px
+  height 400px
+  box-sizing()
+  resize vertical
+  padding 10px
+  display block // really important or space happens
+
+input[type='text'].newEntryTitle
+  width 100%
+  max-width 100%
+
+.studentRow
+  padding 10px
+  width 300px
+  box-sizing()
+  border 1px solid lightGrayColor
+
+.userField
+  font-size 13px
+  padding 5px
+  box-sizing()
+
+.titleField
+  inline-block()
+  font-size 16px
+  column 2.27
+
+
+.userDescription
+  ellipsis()
+
+
+.endField
+  inline-block()
+
+
+.makeOffer:hover
+  text-decoration underline
+  cursor pointer
+
+.rejectStudent:hover
+  text-decoration underline
+  cursor pointer
+
+.acceptOffer:hover
+  text-decoration underline
+  cursor pointer
+
+.rejectOffer:hover
+  text-decoration underline
+  cursor pointer
+
+.btn-submit.imInterested
+  inline-block()
+  float none
+
+.userStatus
+  text-transform capitalize
+
+// .accepted
+//   color green
+
+.studentRejected
+  color red
+
+.facultyRejected
+  color red
+
+.supervisor
+  inline-block()
+
+
+.studentRow > a
+  color linkColor
+
+
+input[type='submit']
+  // background-color darkPurple
+  // color white
+  border none
+  // color darkPurple
+  // background-color #b3d3ff
+  font-size 1.05em
+    
+input[type='submit']:hover
+  text-decoration underline
+  cursor pointer
+
+input[type='submit'].btn-submit
+  float right
+  cursor pointer
+  box-sizing()
+  // padding 12.5px
+  // background-color darkPurple
+  // color white !important
+  // border-bottom 3px solid darkPurple
+
+.btn-submit
+  float right
+  box-sizing()
+  cursor pointer
+  // padding 12.5px
+  background-color transparent
+  // color white !important
+  // font-family "AvenirNextLTW01-DemiCn"
+  // border-bottom 3px solid darkPurple
+
+input.interestedInput
+  max-width 200px
+  margin-left 20px
+
+
+

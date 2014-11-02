@@ -1,0 +1,227 @@
+template(name='applicationView')
+  .studentRow
+    .userField.userName #{userData.name}
+    .userField.userMajor #{formatMajor}
+    .userField.userYear #{formatYear}
+    a.userField.userLink(href='#{absoluteLink}') #{profileLink}
+    div(class='userField userStatus {{status}}') #{formatStatus}
+    .userField.userDescription #{description}
+    if canMakeOffer
+      a.userField.makeOffer Offer
+      .separator /
+      a.userField.rejectStudent Reject
+
+
+template(name='addEntry')
+  .addEntryWrapper
+    .addEntryContainer
+      .addEntryTitle Post New Project
+      form.entry-details
+        +inputRow classname='newEntryTitle' label='title' chars=10 textarea=false type='text'
+        .formRow
+          .formLeft
+            label Faculty Advisor
+          .formRight
+            +entryAutoComplete id='fAdvisor'
+        .formRow
+          .formLeft
+            label Direct Supervisor
+          .formRight
+            +entryAutoComplete id='dSupervisor'
+        if needsAdvisor
+          .formRow
+            .formLeft
+              label Your Advisor
+            .formRight
+              +entryAutoComplete id='yAdvisor'
+        .formRow
+          .formLeft
+            label Type
+            div (Select All That Apply)
+          .formRight
+            .projType.addEntryBtn.urop UROP
+            .projType.addEntryBtn.thesis Thesis
+            .projTypeError(class='#{showError}') Please Select At Least One of the Options
+            #credRow.hidden
+              .credType.addEntryBtn.credit Credit
+              .credType.addEntryBtn.pay Pay
+              .credType.addEntryBtn.direct Direct Funding
+        +inputRow classname='newEntryDescription' label='description' chars=600 textarea=true
+        .formRow
+          .formLeft.noDisplay d
+          .formRight
+            .widthHack
+              button(type='button').btn-submit.addEntrySubmit Add Project
+              //- type='button' REALLY IMPORTANT
+              //- http://stackoverflow.com/questions/12325066/button-click-event-fires-when-pressing-enter-key-in-different-input-no-forms
+
+template(name='inputRow')
+  .formRow
+    .formLeft
+      label #{label}
+    .formRight
+      if textarea
+        textarea.genericInput(class='#{classname}')
+      else
+        input.genericInput(class='#{classname}' type='#{type}')
+      .error(class='#{showError}') Please write a meaningful #{label} (at least #{chars} characters)
+        .wordcount #{remainingChars}
+
+template(name='entryAutoComplete')
+  input(class='autoCompEntry newEntry#{id}' id='#{id}' type='text' value='{{getDefaultVal}}' autocomplete='off')
+  .error.small(class='#{showError}') Please select an option from the dropdown menu.
+  .autoFaculty(class='{{showideaSearch}}')
+    each filteredIdeas
+      .filtFac {{{searchCacheBold}}}
+
+template(name='entriesList')
+  .entrySection
+    #entryGrid
+      .resized.hidden #{resized}
+      {{> UI.dynamic template='dynamicColumns' data=formatEntries}}
+
+
+
+template(name='largeEntry')
+  .largeEntrySection
+    .largeEntry
+      .title= title
+      .statusIndicator
+      // TODO fix
+      .advisor
+        a.emailIcon(href='mailto:test@test.com' target='blank')
+        a.supervisor(href='getSupervisorEmail' target='blank') Malcom Gilbert
+      .description {{{description}}}
+      .date #{formatDate}
+      .types #{projType} #{formatProjTypes}
+      //- unless approved
+      //-   .pending Needs Approval
+      //-   span.dash -       
+      //- .status(class='{{status}}')= status
+
+
+      if canApply
+        if applied
+          with userApplication
+            .applyContainer
+              .applyContainerWrapper
+                .applyStatus #{formatStatus}
+                .applyDescription(placeholder='I want this UROP because...') #{description}
+                .applyLink(placeholder='Portfolio Link') #{profileLink}
+                if interested
+                  .removeBtn Remove
+                else if offered
+                  .acceptBtn Accept Offer
+                  .rejectBtn Reject Offer
+        else
+          .applyContainer
+            .applyContainerWrapper
+              textarea.applyDescription(placeholder='I want this UROP because...')
+              input.applyLink(placeholder='Portfolio Link')
+              .applyBtn Apply
+
+    if canSeeApplicants
+      .applicationSection
+        .title Applicants (#{applicationList.count})
+        each applicationList
+          +applicationView 
+
+
+template(name='dynamicColumns')
+  each columns
+    if isLast ..
+      .gridColumn.last(class='column{{index}}' id='column{{index}}')
+        each entries
+          +gridEntry
+    else if isFirst
+      .gridColumn(class='column{{index}}' id='column{{index}}')
+        +userProfileGrid
+        each entries
+          +gridEntry
+    else
+      .gridColumn(class='column{{index}}' id='column{{index}}')
+        each entries
+          +gridEntry
+  .gridColumn(class='columnH hidden')
+    each hiddenEntries
+      +gridEntry
+
+template(name='userProfileGrid')
+  .userInfo(class='#{isMePage}')
+    .title.userRow #{userFullName}
+    .userRow 
+      .userLabel Major 
+      .userData #{department}
+    .userRow 
+      .userLabel Year 
+      .userData #{year}
+    +editableUserInfo classname='advisor' label='Advisor' type='advisor'
+    +editableUserInfo classname='portfolioLink' label='Portfolio Link' type='portfolioLink'
+
+template(name='editableUserInfo')
+  .userRow(class='#{classname}')
+    if isActive
+      if isAdvisorType
+        +entryAutoComplete id='Advisor'
+      else
+        input.userData(type='text' placeholder='#{label}' value='#{getData}')
+      .editIcon.icon.ion-android-checkmark
+    else
+      .userLabel #{label}
+      unless isAdvisorType
+        if hasPortfolioLink
+          a.userData.ellipsis.withIcon(href='#{getLink}' target='blank') #{getData}
+        else
+          .userData.ellipsis.withIcon
+      else
+        .userData.withIcon #{getData}
+      .editIcon.icon.ion-edit
+
+template(name='gridEntry')
+  .entryContainer(class='{{formatStatus}} {{matches}}' id='#{cssId}')
+    .glassOverlay(class='{{expanded}}')
+    .title {{{formatTitle}}}
+    //- .statusIndicator
+    // TODO fix
+    .advisor
+      if hasfAdvisor
+        a.emailIcon(href='mailto:#{fAdvisorEmail}' target='blank')
+        a.supervisor(href='#') #{fAdvisorName}
+    .dSupervisor
+      if hasdSupervisor
+        a.emailIcon(href='mailto:#{dSupervisorEmail}' target='blank')
+        a.supervisor(href='#') #{dSupervisorName}
+    .description(class='{{expanded}}') {{{truncatedDescription}}}
+      .descriptionExpand #{expandText}
+    .types 
+      .projTypes #{formatProjTypes}
+      .credTypes #{formatCredTypes}
+    .date 
+      .smallIconRow
+        .smallIcon.icon.ion-clipboard(class='#{hasApplied}')
+        .smallIcon.icon.ion-ios7-star(class='#{isSaved}')
+        .smallIcon.icon.ion-eye-disabled(class='#{isHidden}')
+      .dateText #{formatDate}
+    .buttonRow
+      .elem.status(class='#{formatStatus}')
+        .firstRow.icon.ion-android-information
+        .secondRow(class='#{formatStatus}') #{formatStatus}
+      .elem.apply(class='#{canApply}')
+          .firstRow.icon.ion-ios7-compose
+          .secondRow Apply
+      .elem.apply(class='#{canNotApply}')
+          .firstRow.icon.ion-arrow-expand
+          .secondRow Expand
+      .elem.saved(class='#{isSaved}')
+        .firstRow.icon.ion-ios7-star-outline
+        .secondRow Unsave
+      .elem.save(class='#{isNotSaved}')
+        .firstRow.icon.ion-ios7-star
+        .secondRow Save
+      .elem.last.show(class='#{isHidden}')
+          .firstRow.icon.ion-eye
+          .secondRow show
+      .elem.last.hide(class='#{isNotHidden}')
+          //- .icon.ion-heart-broken
+          .firstRow.icon.ion-eye-disabled
+          .secondRow hide

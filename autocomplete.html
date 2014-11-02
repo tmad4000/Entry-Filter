@@ -1,0 +1,11 @@
+<template name="entryAutoComplete">
+	<div>
+  <input class='autoCompEntry newEntry{{id}}' id='{{id}}' type='text' value='' autocomplete='off'>
+  <div class="error small {{showError}}"> Please select an option from the dropdown menu.</div>
+  <div class="autoFaculty {{showideaSearch}}">
+    {{#each filteredIdeas}}
+      <div class="filtFac"> {{{searchCacheBold}}}</div>
+    {{/each}}
+  </div>
+</div>
+</template>
