@@ -670,6 +670,7 @@ if (Meteor.isServer) {
      //   Ideas.remove({})
 
 
+
         iray=[]
        if (Ideas.find().count() === 0) {
             root_id = insertIdea({text: "Hackathon Ideas"});
@@ -707,6 +708,8 @@ if (Meteor.isServer) {
             // insertIdea(sampleIdea);
        }
 
+
+  
 
     });
 }
