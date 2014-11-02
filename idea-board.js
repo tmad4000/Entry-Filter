@@ -108,8 +108,9 @@ Router.route('/idea/:_id(*)', function () {
 
       var manuallyReviewedRelations={}
       for (key in this.relations) {
-          if (this.relations[key].reviewed)
-            manuallyReviewedRelations[key] = this.relations[key];
+        if (this.relations[key].reviewed && this.relations[key].weight > 0)
+          console.log(this.relations[key].weight)
+          manuallyReviewedRelations[key] = this.relations[key];
       }
 
       return _.map(manuallyReviewedRelations, function(val, key) {
@@ -160,6 +161,8 @@ Router.route('/idea/:_id(*)', function () {
 
      var setReviewed ={}
      setReviewed["relations."+this.targetIdea._id+".reviewed"]=true;
+     setReviewed["relations."+this.targetIdea._id+".weight"]=0;
+     
      var oneDeny ={}
      oneDeny["relations."+this.targetIdea._id+".denies"]=1;
 
@@ -306,8 +309,30 @@ Router.route('/idea/:_id(*)', function () {
       var initializing = true;
       Ideas.find().observeChanges({
         added: function(id, doc) {
-          
+
           if (!initializing) {
+
+            // //Ideas.find({relations: {&lt: 3, relations: }}) 
+            //             insertRelationBi(id,data.results['0']._id)
+            // insertRelationBi(id,data.results['1']._id)
+            // insertRelationBi(id,data.results['2']._id)
+
+            // $.ajax({
+            //   url: 'http://localhost:5000/compute_suggested_relations',
+            //   data: {text:doc.text},
+            //   jsonpCallback: 'jsonpCallback',
+            //   contentType: "application/json",
+            //   dataType: 'jsonp',
+            //   success:  function(data) {
+                
+            //     console.log(data)
+
+            //     insertRelationBi(id,data.results['0']._id)
+            //     insertRelationBi(id,data.results['1']._id)
+            //     insertRelationBi(id,data.results['2']._id)
+            //   }
+            // });
+
             // console.log(doc);
           }
         }
@@ -413,9 +438,84 @@ Router.route('/idea/:_id(*)', function () {
     'a.breadcrumb click': function(){
       // history.pushState({}, '', $(event.target).attr("href"));
       // return false;
-    }
-    'a#import-link click': function(){
-      Session.set("importShow",!Session.get("importShow"))
+    },
+
+    'click .suggest-relations': function(e,t){
+      
+      var is = Ideas.find({parent_id: Session.get("current_idea")._id}).fetch();
+      is.forEach(function(idea) {
+        if (Math.random()>.7) {
+          console.log("reladded")
+          Meteor.call('insertRelationBiServer',idea._id, is[Math.floor(is.length * Math.random())]._id,  {weight: 1, reviewed: false})
+        }
+      })
+                
+    },
+    'click .import-submit': function(e,t){
+      var nodes = false;
+      var edges = false;
+      try {
+        nodes = $.parseJSON($('.import-nodes').val().trim());
+        edges = $.parseJSON($('.import-edges').val().trim());
+      }      
+      catch (err) {
+        // Do something about the exception here
+      }
+      var textParam=$(".import-text-param").val() || "text"; 
+      var detailParam=$(".import-detail-param").val() || false; 
+
+
+      var msg = '';
+      var nodeCount = 0;
+      iray = [];
+      if (nodes) {
+         nodes.forEach(function(idea) {
+                if (idea._id) 
+                  delete idea._id;
+
+                idea["text"]=idea[textParam] || "";
+
+                if (detailParam && idea[detailParam]) {
+                  idea["text"]+="\n\n -- " + idea[detailParam];
+                  console.log(idea[detailParam])
+                }
+
+                idea["searchCache"] = idea["text"];
+                idea["relations"] = {};
+                idea["parent_id"] = Session.get("current_idea")._id;
+                idea["date_created"] = new Date().getTime();
+                idea["status"] = 0;
+
+
+                iray.push(insertIdea(idea));
+                nodeCount++;
+            });
+
+         msg += (nodeCount) + ' nodes successfully imported. '
+      }
+      else {
+        msg += 'No nodes imported. ';
+      }
+
+      var edgeCount = 0;
+      if (edges) {
+         edges.forEach(function(edge) {
+                insertRelationBi(iray[edge.source], iray[edge.target])
+              
+                edgeCount++;
+            });
+
+         msg += (edgeCount) + ' edges successfully imported. '
+      }
+      else {
+        msg += 'No edges imported. ';
+      }
+
+     
+
+
+      console.log(msg)
+      return false;
       // history.pushState({}, '', $(event.target).attr("href"));
       // return false;
     }
