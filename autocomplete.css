@@ -1,0 +1,30 @@
+
+.autoFaculty {
+  position: absolute;
+  top: 41px;
+  left: 0;
+  z-index: 50;
+  width: 400px;
+  background-color: #fff;
+  color: #8a9599;
+  height: 400px;
+  overflow: auto;
+  border: 1px solid #b3c2c7;
+}
+.filtFac {
+  border-bottom: 1px solid #b3c2c7;
+  padding: 10px;
+  line-height: 1.3em;
+}
+.filtFac b {
+  font-weight: bold;
+  font-size: 1em;
+  color: #000;
+}
+.filtFac:hover {
+  background-color: #cdcdcd;
+  cursor: pointer;
+}
+.filtFac.active {
+  background-color: #cdcdcd;
+}
