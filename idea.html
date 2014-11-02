@@ -129,8 +129,9 @@
 </template>
 
 <template name="graph">
-  <svg id="viz" class="col-sm-7"></svg>
-  <div class="col-sm-4 col-sm-offset-1">
+  <svg id="viz"></svg>
+
+  <div style="position: absolute; top: 119px; right: 54px; width: 290px; background: white;padding: 15px;">
     {{#if selected_idea}}
     <div>
       <!-- <h3>Selection: {{selected_idea.index}}</h3> -->
