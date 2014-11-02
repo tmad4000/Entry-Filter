@@ -209,6 +209,11 @@ Router.route('/idea/:_id(*)', function () {
     this.expandedIdeas=new ReactiveVar([]);
   }
 
+  Template.idea.rendered=function() {
+    
+    //slideDown(1000);
+  }
+
   Template.idea.events({
     'click .relation>a': function(event) {
       var $targetLink=$(event.target)

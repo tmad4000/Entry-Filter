@@ -1,25 +1,30 @@
 if (Meteor.isClient) {
-  ifupdateAutoCompleteTemplate = function(obj, t) {
+  updateAutoCompleteTemplate = function(obj, t) {
     Session.set(t.id, obj);
     t.input.set(obj.searchCache);
+
+    var sourceId = t.data.id;
+    var targetIdea=obj;
+
+     var newRelation ={}
+     newRelation["relations."+targetIdea._id]={weight:1,reviewed:true}
+
+     Ideas.update({_id:sourceId},{$set: newRelation})
+
+     var newRelationBack ={}
+     newRelationBack["relations."+sourceId]={weight:1,reviewed:true}
+     Ideas.update({_id:targetIdea._id},{$set: newRelationBack})     
+
+
+     console.log(Ideas.findOne({_id:sourceId}))
   }
 
   updateAutoCompleteUI = function(obj, t) {
     // console.log('this', this);
     t.$('.autoCompEntry').blur();
-    t.$('.autoCompEntry').val(userFullName(obj));
+    t.$('.autoCompEntry').val("");
   }
 
-  getAdvisor = function(user, t) {
-    var obj = user.profile.advisor;
-    if (obj) {
-      updateAutoCompleteTemplate(obj, t);
-      return userFullName(obj);
-    }
-    else {
-      return '';
-    }
-  }
 
   Template.entryAutoComplete.created = function() {
     // console.log('created', this);

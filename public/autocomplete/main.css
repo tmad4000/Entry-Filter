@@ -1,0 +1,907 @@
+/* CSS declarations go here */
+img {
+  width: 100%;
+  vertical-align: top;
+}
+.hidden {
+  display: none !important;
+}
+.noDisplay {
+  visibility: hidden !important;
+}
+a {
+  color: #149bcc;
+  text-decoration: none;
+}
+b {
+  background-color: #106470;
+  color: #e4e4e4;
+}
+textarea,
+input {
+  font-size: 13px;
+  font-family: "AvenirNextLTW01-Regular", "Lato", "Trebuchet MS", Helvetica, sans-serif;
+}
+a:hover {
+  text-decoration: underline;
+}
+html,
+body {
+  position: relative;
+  width: 100%;
+  min-width: 300px;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 750px;
+  height: 100% !important;
+  background-color: #cdcdcd;
+  font-family: "AvenirNextLTW01-Regular", "Lato", "Trebuchet MS", Helvetica, sans-serif;
+}
+body.overlaid {
+  overflow: hidden;
+}
+#overlayWrapper {
+  padding-top: 60px;
+  width: 100%;
+}
+#overlayWrapper.fixed {
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.header {
+  min-width: 1320px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #106470;
+  width: 100%;
+  z-index: 20;
+  clear: both;
+}
+#headerTitle {
+  font-family: Helvetica;
+}
+.headerLabel {
+  padding: 13px 13px 9px;
+  color: #acd8e6;
+  font-size: 20px;
+  float: left;
+  border-bottom: 4px solid #106470;
+}
+.headerLabel.active {
+  border-bottom: 4px solid #fff;
+  color: #fff;
+}
+.headerLabel:hover {
+  color: #fff;
+  border-bottom: 4px solid #fff;
+  text-decoration: none;
+}
+.headerLabel.classmit {
+  color: #acd8e6;
+  margin-right: 30px;
+}
+.headerLabel.classmit:hover {
+  border-bottom: 4px solid #106470;
+  pointer: auto;
+}
+#searchSection {
+  position: relative;
+}
+input#searchBar {
+  height: 45px;
+  width: 348px;
+  border: none;
+  padding: 10px;
+  padding-right: 40px;
+  background-color: #0d5059;
+  background-color: rgba(13,80,89,0.85);
+  color: #acd8e6;
+  font-size: 16px;
+}
+#searchBarOptions {
+  position: absolute;
+  top: 0;
+  left: 0px;
+  height: 45px;
+  width: 42px;
+  background-color: #0d5059;
+  cursor: pointer;
+  color: #fff;
+}
+#searchBarIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 25px;
+  padding: 10px;
+  text-align: center;
+  color: #acd8e6;
+}
+.searchBarOptionsWrapper {
+  text-align: center;
+  height: 45px;
+  width: 42px;
+  margin: 0 auto;
+  font-size: 40px;
+  display: table-cell;
+  vertical-align: middle;
+}
+#tagsSection {
+  margin-top: 10px;
+}
+#tagIcon {
+  background-color: #0d5059;
+  cursor: pointer;
+}
+.tag {
+  padding: 5px;
+  padding-right: 25px;
+  border: 2px solid #fff;
+  text-transform: uppercase;
+  position: relative;
+  color: #fff;
+  border-radius: 5px;
+}
+.tag:after {
+  content: 'x';
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 5px;
+}
+.tag.specialTag {
+  padding-left: 28px;
+}
+.tag.specialTag:before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 5px;
+}
+.tag.personTag:before {
+  content: '@';
+}
+.tag.hashTag:before {
+  content: '#';
+}
+.rightHeaderLink {
+  float: right;
+  padding: 13px;
+  cursor: pointer;
+  color: #acd8e6;
+  font-size: 20px;
+  font-family: 'Avenir Next W01 Thin';
+}
+.rightHeaderLink:hover {
+  background-color: #0d5059;
+}
+.rightHeaderLink:active {
+  background-color: #106470;
+}
+#newPostText {
+  text-transform: uppercase;
+}
+#userSection {
+  float: right;
+  padding: 13px;
+  position: relative;
+}
+#userName {
+  text-transform: uppercase;
+  max-width: 130px;
+  cursor: pointer;
+}
+#notificationBubble {
+  height: 20px;
+  width: 20px;
+  background-color: #ff0;
+  border-radius: 100%;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  cursor: pointer;
+}
+#notificationBubbleText {
+  text-align: center;
+  margin-top: 2.5px;
+}
+.forgotPassContainer {
+  display: none;
+}
+.forgotPassContainer.show {
+  display: block;
+}
+.signUpTitle {
+  margin-bottom: 20px;
+  font-size: 1.2em;
+}
+.signInContainer {
+  column: 11;
+  padding: 10px;
+  padding-right: 20px;
+}
+.signUpContainer {
+  column: 5;
+  padding: 20px;
+  border-left: 1px solid #8a9599;
+}
+.landingContainer {
+  width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #e4e4e4;
+  border: 1px solid #8a9599;
+}
+.formRow {
+  padding: 5px;
+  position: relative;
+  width: 100%;
+}
+.formLeft {
+  column: 4;
+}
+.formLeft label {
+  text-transform: capitalize;
+}
+.formRight {
+  column: 12;
+  position: relative;
+}
+#signInForm {
+  position: relative;
+}
+.signInSpaceHack {
+  height: 50px;
+  column: 16;
+}
+input[type='text'],
+input[type='password'] {
+  height: 43px;
+  font-size: 15px;
+  width: 100%;
+  max-width: 300px;
+  border: 1px solid #b3c2c7;
+  padding: 5px;
+}
+.formLabel {
+  padding-top: 7.5px;
+}
+#signInButton {
+  float: right;
+}
+.signUpBackButton {
+  float: left;
+}
+.widthHack {
+  width: 300px;
+  padding: 0;
+  margin: 0;
+}
+button.btn-submit {
+  float: right;
+  padding: 12.5px;
+  background-color: #106470;
+  margin-right: -0.5px;
+  color: #fff !important;
+  border: none;
+  font-size: 1.05em;
+}
+button.btn-submit:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.showForgotPassword {
+  font-size: 0.8em;
+  padding: 5px 0;
+  float: left;
+}
+#signInSpaceHack {
+  height: 15px;
+}
+.signUpRow {
+  column: 16;
+  font-size: 16px;
+  text-align: center;
+  vertical-align: middle;
+}
+.signUpRowText {
+  margin: 0 auto;
+  padding: 20px;
+}
+#signUpSectionTitle {
+  padding-top: 0;
+  font-size: 1.1em;
+}
+#signOut {
+  color: #acd8e6;
+}
+.certificateLink {
+  text-decoration: underline;
+}
+.overlay {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  z-index: 21;
+  overflow: auto;
+}
+.largeEntryContainer {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 22;
+  overflow: auto;
+}
+.largeEntrySection {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 1020px;
+  margin: 0 auto;
+}
+.largeEntry {
+  position: relative;
+  z-index: 23;
+  width: 700px;
+  margin: 20px 20px 20px 0;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: auto;
+}
+.largeEntry .description {
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 30px;
+}
+.largeEntry .title {
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 30px;
+  font-family: 'AvenirNextLTW01-DemiCn';
+  color: #106470;
+}
+.largeEntry .advisor {
+  margin: 10px 0 25px;
+}
+.largeEntry .advisor.supervisor {
+  font-size: 18px;
+}
+.largeEntry .advisor.supervisor:before {
+  content: 'Faculty: ';
+}
+.applicationSection {
+  position: relative;
+  z-index: 23;
+  width: 700px;
+  margin: 0 20px 20px 0;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  cursor: auto;
+}
+.applicationSection .title {
+  font-size: 20px;
+  font-weight: bold;
+  max-width: 550px;
+  line-height: 25px;
+}
+.applyContainerWrapper {
+  position: fixed;
+  width: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.applyContainer {
+  position: absolute;
+  top: 0px;
+  right: -320px;
+  width: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.applyContainer .applyDescription {
+  width: 100%;
+  padding: 10px;
+  display: block;
+  border: none !important;
+  resize: none;
+  min-height: 150px;
+  margin: 0;
+  background-color: #fff;
+  font-size: 13px;
+  line-height: 18px;
+}
+.applyContainer .applyLink {
+  width: 100%;
+  display: block;
+  border: none;
+  border-top: 1px solid #b3c2c7;
+  padding: 10px;
+  margin: 0;
+  background-color: #fff;
+  font-size: 13px;
+}
+.applyContainer .applyBtn,
+.applyContainer .removeBtn {
+  font-family: 'AvenirNextLTW01-DemiCn';
+  color: #fff;
+  background-color: #106470;
+  padding: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.applyContainer .acceptBtn,
+.applyContainer .rejectBtn {
+  font-family: 'AvenirNextLTW01-DemiCn';
+  color: #fff;
+  background-color: #106470;
+  padding: 10px;
+  column: 8;
+  text-align: center;
+  cursor: pointer;
+}
+.applyContainer .acceptBtn:hover,
+.applyContainer .rejectBtn:hover {
+  font-size: 1.1em;
+}
+.applyContainer .applyStatus {
+  font-family: 'AvenirNextLTW01-DemiCn';
+  color: #fff;
+  background-color: #106470;
+  padding: 10px;
+  text-align: center;
+  text-transform: capitalize;
+}
+#entryGrid {
+  margin: 0 auto;
+  padding: 0;
+}
+.gridColumn {
+  width: 315px;
+  padding-right: 15px;
+  float: left;
+}
+.gridColumn.last {
+  padding-right: 0;
+  width: 300px;
+}
+.userInfo {
+  width: 300px;
+  margin-bottom: 15px;
+  position: relative;
+  border-radius: 3px;
+  background-color: #e4e4e4;
+  border-top: 1px solid #bfbfbf;
+}
+.userInfo .userRow {
+  border-bottom: 1px solid #b3c2c7;
+  font-size: 13px;
+  line-height: 18px;
+  position: relative;
+}
+.userInfo .title {
+  font-family: 'AvenirNextLTW01-DemiCn';
+  text-align: center;
+  color: #fff;
+  background-color: #106470;
+  font-size: 20px;
+  line-height: 26px;
+  padding: 10px;
+}
+.userInfo .userLabel {
+  padding: 10px;
+  font-weight: bold;
+  color: #106470;
+  column: 8;
+}
+.userInfo .userData {
+  column: 8;
+  padding: 10px;
+}
+.userInfo .userData.withIcon {
+  padding-right: 33px;
+}
+.userInfo input.userData {
+  border: none;
+  padding-right: 33px;
+  height: 38px;
+  column: 16;
+}
+.userInfo .editIcon {
+  position: absolute;
+  right: 0;
+  top: 0;
+  padding: 10px;
+  color: #106470;
+  cursor: pointer;
+}
+.userInfo .editIcon:hover {
+  color: #000;
+}
+.userInfo .error {
+  color: #f00;
+  background-color: #fff;
+  padding: 5px;
+  font-size: 11px;
+  position: relative;
+  border-top: 1px dashed #b3c2c7;
+}
+.entryContainer.offered,
+.entryContainer.accepted {
+  border-bottom: 3px solid #149bcc;
+}
+.entryContainer.pending,
+.entryContainer.applied {
+  border-bottom: 3px solid #9c9564;
+}
+.entryContainer.filled,
+.entryContainer.rejected {
+  border-bottom: 3px solid #cc8478;
+}
+.entryContainer:hover > .buttonRow {
+  display: block !important;
+}
+.entryContainer {
+  width: 300px;
+  background-color: #e4e4e4;
+  margin-bottom: 15px;
+  border-radius: 3px;
+  padding: 10px;
+  position: relative;
+  padding-bottom: 15px;
+  border-top: 1px solid #bfbfbf;
+  border-bottom: 3px solid #b3c2c7;
+  overflow: hidden;
+}
+.entryContainer .title {
+  font-size: 20px;
+  line-height: 26px;
+  cursor: pointer;
+  font-family: 'AvenirNextLTW01-DemiCn';
+  color: #106470;
+}
+.entryContainer .advisor {
+  margin-top: 6px;
+  font-size: 16px;
+  line-height: 20px;
+}
+.entryContainer .statusIndicator {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  border: 5px solid #106470;
+  border-radius: 100%;
+}
+.entryContainer .description {
+  line-height: 18px;
+  font-size: 13px;
+  margin: 15px 0 30px;
+  position: relative;
+  overflow: hidden;
+}
+.entryContainer .description.collapsed {
+  max-height: 160px;
+}
+.entryContainer .description:hover > .descriptionExpand {
+  display: none;
+}
+.entryContainer .descriptionExpand {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  content: 'Expand';
+  padding: 7.5px;
+  color: #106470;
+  background-color: #fff;
+  border-radius: 8px;
+  cursor: pointer;
+  display: none;
+}
+.entryContainer .date {
+  color: #8a9599;
+  font-size: 10px;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+.entryContainer .types {
+  color: #8a9599;
+  font-size: 10px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+}
+.entryContainer .projTypes,
+.entryContainer .credTypes {
+  text-align: right;
+  line-height: 12px;
+}
+.entryContainer .smallIcon {
+  font-size: 13px;
+  line-height: 16px;
+}
+.entryContainer .smallIcon.false {
+  display: none !important;
+}
+.entryContainer .glassOverlay {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  background-image: url("/img/overlay3.png");
+  z-index: 19;
+  width: 300px;
+  height: 250px;
+}
+.entryContainer .glassOverlay.collapsed {
+  height: 250px;
+  display: block;
+}
+.entryContainer .glassOverlay.expanded {
+  height: auto;
+  display: none;
+}
+.entryContainer .buttonRow {
+  position: absolute;
+  left: 0;
+  bottom: 40px;
+  z-index: 19;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
+  display: none;
+}
+.buttonRow .elem {
+  padding: 5px;
+  text-transform: uppercase;
+  float: left;
+  width: 75px;
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+  background-color: #e4e4e4;
+  border-bottom: 3px solid #e4e4e4;
+  color: #106470;
+}
+.buttonRow .elem:hover,
+.buttonRow .elem.dark:hover {
+  color: #333738;
+  border-bottom: 3px solid #333738;
+}
+.buttonRow .elem.dark {
+  background-color: #ccc;
+  border-bottom: 3px solid #ccc;
+}
+.buttonRow .firstRow {
+  padding-bottom: 5px;
+  line-height: 18px;
+}
+.buttonRow .elem.status.open {
+  color: #b3c2c7;
+}
+.buttonRow .elem.status.open:hover,
+.buttonRow .elem.status.pending:hover,
+.buttonRow .elem.status.applied:hover,
+.buttonRow .elem.status.offered:hover,
+.buttonRow .elem.status.accepted:hover,
+.buttonRow .elem.status.filled:hover,
+.buttonRow .elem.status.rejected:hover {
+  border-bottom: 3px solid #e4e4e4;
+}
+.buttonRow .elem.status.pending,
+.buttonRow .elem.status.applied {
+  color: #9c9564;
+}
+.buttonRow .elem.status.offered,
+.buttonRow .elem.status.accepted {
+  color: #149bcc;
+}
+.buttonRow .elem.status.filled,
+.buttonRow .elem.status.rejected {
+  color: #cc8478;
+}
+.buttonRow .elem.status {
+  cursor: auto;
+}
+.buttonRow .icon {
+  font-size: 18px;
+}
+.wordcount {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #8a9599;
+  font-weight: bold;
+}
+.autoFaculty {
+  position: absolute;
+  top: 41px;
+  left: 0;
+  z-index: 50;
+  width: 400px;
+  background-color: #fff;
+  color: #8a9599;
+  height: 400px;
+  overflow: auto;
+  border: 1px solid #b3c2c7;
+}
+.filtFac {
+  border-bottom: 1px solid #b3c2c7;
+  padding: 10px;
+  line-height: 1.3em;
+}
+.filtFac b {
+  font-weight: bold;
+  font-size: 1em;
+  color: #000;
+}
+.filtFac:hover {
+  background-color: #cdcdcd;
+  cursor: pointer;
+}
+.filtFac.active {
+  background-color: #cdcdcd;
+}
+.addEntryWrapper {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 19;
+  background-color: #106470;
+  background-color: rgba(16,100,112,0.85);
+  padding-top: 80px;
+  padding-bottom: 20px;
+  overflow: auto;
+}
+.addEntryContainer {
+  width: 1020px;
+  position: relative;
+  margin: 0 auto;
+  z-index: 20;
+  background-color: #106470;
+  padding: 20px;
+  color: #fff;
+  line-height: 1.3em;
+  border-top: 1px solid #155f6a;
+  margin-bottom: 20px;
+  border-radius: 3px;
+  cursor: auto;
+}
+.addEntryTitle {
+  font-size: 1.4em;
+  font-family: 'AvenirNextLTW01-DemiCn';
+  margin-bottom: 20px;
+}
+#credRow {
+  margin-top: 10px;
+}
+.projTypeError {
+  color: #f00;
+  background-color: #fff;
+  padding: 10px;
+  border-left: 5px solid #0d5059;
+}
+.addEntryContainer .error {
+  color: #f00;
+  background-color: #fff;
+  padding: 5px;
+  font-size: 11px;
+  margin-top: -1px;
+  position: relative;
+  z-index: 21;
+  border: 1px solid #b3c2c7;
+  border-top: 1px dashed #b3c2c7;
+}
+.addEntryContainer .error.small {
+  max-width: 300px;
+}
+.addEntryContainer .error.full {
+  width: 100%;
+}
+.addEntryBtn {
+  padding: 10px;
+  margin-right: 15px;
+  cursor: pointer;
+  border-radius: 3px;
+  border: 2px solid #0d5059;
+}
+.addEntryBtn:hover {
+  background-color: #0d5059;
+}
+.addEntryBtn.active {
+  border: 2px solid #fff;
+}
+.interested {
+  color: #000;
+}
+.newEntryDescription {
+  width: 100%;
+  border: 1px solid #b3c2c7;
+  font-size: 15px;
+  height: 400px;
+  resize: vertical;
+  padding: 10px;
+  display: block;
+}
+input[type='text'].newEntryTitle {
+  width: 100%;
+  max-width: 100%;
+}
+.studentRow {
+  padding: 10px;
+  width: 300px;
+  border: 1px solid #b3c2c7;
+}
+.userField {
+  font-size: 13px;
+  padding: 5px;
+}
+.titleField {
+  font-size: 16px;
+  column: 2.27;
+}
+.makeOffer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.rejectStudent:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.acceptOffer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.rejectOffer:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+.btn-submit.imInterested {
+  float: none;
+}
+.userStatus {
+  text-transform: capitalize;
+}
+.studentRejected {
+  color: #f00;
+}
+.facultyRejected {
+  color: #f00;
+}
+.studentRow > a {
+  color: #149bcc;
+}
+input[type='submit'] {
+  border: none;
+  font-size: 1.05em;
+}
+input[type='submit']:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+input[type='submit'].btn-submit {
+  float: right;
+  cursor: pointer;
+}
+.btn-submit {
+  float: right;
+  cursor: pointer;
+  background-color: transparent;
+}
+input.interestedInput {
+  max-width: 200px;
+  margin-left: 20px;
+}
