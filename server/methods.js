@@ -9,7 +9,7 @@ Meteor.methods({
     var retVal = [];
 
     retVal = Ideas.find(data.query, data.other).fetch();
-
+    console.log(retVal.length)
     return _.sortBy(retVal, function(obj) {return obj.searchCache});
   }
 

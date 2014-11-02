@@ -1,7 +1,6 @@
 <template name="entryAutoComplete">
-	<div>
-  <input class='autoCompEntry newEntry{{id}}' id='{{id}}' type='text' value='' autocomplete='off'>
-  <div class="error small {{showError}}"> Please select an option from the dropdown menu.</div>
+<div class = "auto-complete-container" >
+  <input class='autoCompEntry newEntry{{id}}' id='autocmpl{{id}}' type='text' value='' placeholder="+ Add Related" autocomplete='off'>
   <div class="autoFaculty {{showideaSearch}}">
     {{#each filteredIdeas}}
       <div class="filtFac"> {{{searchCacheBold}}}</div>
