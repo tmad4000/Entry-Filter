@@ -435,10 +435,86 @@ Router.route('/idea/:_id(*)', function () {
       Session.set("search_input", $('input[name=search]').val());
     },
 
-    'a.breadcrumb click': function(){
-      // history.pushState({}, '', $(event.target).attr("href"));
-      // return false;
-    },
+ // 'a.breadcrumb': function(){
+    //   // history.pushState({}, '', $(event.target).attr("href"));
+    //   // return false;
+    // },
+    'click .import-link': function(){
+      Session.set("importShow",!Session.get("importShow"))
+      return false;
+       // history.pushState({}, '', $(event.target).attr("href"));
+       // return false;
+     },
+    'click .import-submit': function(e,t){
+      var nodes = false;
+      var edges = false;
+      try {
+        nodes = $.parseJSON($('.import-nodes').val().trim());
+        edges = $.parseJSON($('.import-edges').val().trim());
+      }      
+      catch (err) {
+        // Do something about the exception here
+      }
+      var textParam=$(".import-text-param").val() || "text"; 
+      var detailParam=$(".import-detail-param").val() || false; 
+
+
+      var msg = '';
+      var nodeCount = 0;
+      iray = [];
+      if (nodes) {
+         nodes.forEach(function(idea) {
+                if (idea._id) 
+                  delete idea._id;
+
+                idea["text"]=idea[textParam] || "";
+
+                if (detailParam && idea[detailParam]) {
+                  idea["text"]+="\n\n -- " + idea[detailParam];
+                  console.log(idea[detailParam])
+                }
+
+                idea["searchCache"] = idea["text"];
+                idea["relations"] = {};
+                idea["parent_id"] = Session.get("current_idea")._id;
+                idea["date_created"] = new Date().getTime();
+                idea["status"] = 0;
+
+
+                iray.push(insertIdea(idea));
+                nodeCount++;
+            });
+
+         msg += (nodeCount) + ' nodes successfully imported. '
+      }
+      else {
+        msg += 'No nodes imported. ';
+      }
+
+      var edgeCount = 0;
+      if (edges) {
+         edges.forEach(function(edge) {
+                insertRelationBi(iray[edge.source], iray[edge.target])
+              
+                edgeCount++;
+            });
+
+         msg += (edgeCount) + ' edges successfully imported. '
+      }
+      else {
+        msg += 'No edges imported. ';
+      }
+
+     
+
+
+      console.log(msg)
+      return false;
+       // history.pushState({}, '', $(event.target).attr("href"));
+       // return false;
+     },
+
+
 
     'click .suggest-relations': function(e,t){
       
