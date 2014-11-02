@@ -129,10 +129,18 @@
 </template>
 
 <template name="graph">
-  <div id="viz" class="col-sm-7"></div>
+  <svg id="viz" class="col-sm-7"></svg>
   <div class="col-sm-4 col-sm-offset-1">
-    <div class="well">
-      test
+    {{#if selected_idea}}
+    <div>
+      <!-- <h3>Selection: {{selected_idea.index}}</h3> -->
+      <h3>
+        {{selected_idea.idea.title}}
+      </h3>
+      <p>
+        {{selected_idea.idea.text}}
+      </p>
     </div>
+    {{/if}}
   </div>
 </template>

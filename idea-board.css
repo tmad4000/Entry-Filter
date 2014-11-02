@@ -53,6 +53,14 @@ a.subideas{
 
 }
 
+.node.fixed {
+  fill: #f00 !important;
+}
+
+.node.focused {
+  stroke-width: 5px;
+  stroke: #ddd;
+}
 
 .relation.expanded {
 	color:black;
