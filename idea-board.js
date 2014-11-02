@@ -385,11 +385,19 @@ Router.route('/idea/:_id(*)', function () {
     }
   });
 
+  Template.graph.helpers({
+    selected_idea: function(){
+      return Session.get("selected_idea")
+      return "323e092u34"
+    }
+  })
+
 
   Template.graph.rendered = function () {
     var svg, 
-        width = 700, 
-        height = 700;
+        width = 600, 
+        height = 600;
+
     Tracker.autorun(function () {
       var id = Session.get("current_idea");
       if(!id) return;
@@ -411,12 +419,12 @@ Router.route('/idea/:_id(*)', function () {
       var indexmap = {};
       var data = ideas.map(function(e, i){
         indexmap[e._id] = i;
-        return { index: i, weight: 1 }
+        return { index: i, weight: 1, idea: e }
       });
       
       
       var links = _.flatten(ideas.map(function(idea, i){
-        return Object.keys(idea.relations).filter(function(relative){
+        return Object.keys(idea.relations || {}).filter(function(relative){
           return relative in indexmap
         }).map(function(relative){
           return {
@@ -427,7 +435,7 @@ Router.route('/idea/:_id(*)', function () {
       }));
 
       var fill = d3.scale.category10();
-      console.log(ideas)
+      // console.log(ideas)
 
       function tick(e) {
         node.attr("cx", function(d) { return d.x; })
@@ -440,9 +448,9 @@ Router.route('/idea/:_id(*)', function () {
 
       }
 
-
-
       var force = d3.layout.force()
+        .distance(20)
+        .charge(-40)
         .nodes(data)
         .links(links)
         .size([width, height])
@@ -451,15 +459,21 @@ Router.route('/idea/:_id(*)', function () {
 
 
 
-      svg = d3.select('#viz').append('svg')
+      svg = d3.select('#viz')
         .attr('width', width)
         .attr('height', height);
 
 
+      var onclick = function(d){
+        // console.log('onclick')
+        // d3.select(this).classed("fixed", d.fixed = true);
+        Session.set("selected_idea", d)
+      }
+
       var link = svg.selectAll(".link").data(links)
         .enter().append("line")
-        .attr("class", "link")
-        
+        .attr("class", "link");
+
       var node = svg.selectAll(".node")
         .data(data)
       .enter().append("circle")
@@ -468,7 +482,20 @@ Router.route('/idea/:_id(*)', function () {
         .attr("cy", function(d) { return d.y; })
         .attr("r", 8)
         .style("fill", function(d, i) { return fill(i & 3); })
-        .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); });
+        .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+        .call(force.drag)
+        .on('click', onclick)
+        .on('mouseover', function(d){
+          // var nodeSelection = d3.select(this).style({opacity:'0.8'});
+          // nodeSelection.select("text").style({opacity:'1.0'});
+          Session.set("selected_idea", d)
+          d3.select(this).classed("focused", true)
+
+        })
+        .on('mouseout', function(d){
+          d3.select(this).classed("focused", false)
+          Session.set("selected_idea", null);
+        })
     
 
       force.resume()
@@ -476,6 +503,21 @@ Router.route('/idea/:_id(*)', function () {
 
     });
 
+    
+    // https://gist.github.com/alx/5337474
+
+ 
+    // sigma.publicPrototype.modulate = function() {
+    //   if(!this.modularity) {
+    //     var sigmaInstance = this;
+    //     var mod = new Modularity(sigmaInstance._core);
+    //     sigmaInstance.modularity = mod;
+    //   }
+
+    //   this.modularity.computeModularity();
+
+    //   return this;
+    // }
     
 
 
