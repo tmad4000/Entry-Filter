@@ -794,8 +794,8 @@ Router.route('/idea/:_id(*)', function () {
         .attr("width", function(d){ return d.width })
         .attr("height", function(d){ return d.height })
         .attr("r", 8)
-        .style("fill", function(d, i) { return fill(i & 3); })
-        .style("stroke", function(d, i) { return d3.rgb(fill(i & 3)).darker(2); })
+         .style("fill", function(d, i) {  return d.idea.color || "#CCC"; })
+        .style("stroke", function(d, i) { return d3.rgb(fill(3)).darker(2); })
         // .call(drag)
         .on('click', function(d){
           // console.log('onclick')
