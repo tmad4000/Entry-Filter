@@ -1,23 +1,26 @@
 <template name="idea">
-<li class="ideaContainer {{hidden}}">
-  <div class="idea-body">
-    <div class="idea">{{{bolded_text}}}</div>
-    <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">::subideas:: <span>({{numChildren}})</span></a></div>
-    <div class="date right">{{formatDate}} </div>
-    <div class="relations">
-        {{#each manuallyReviewedRelations}}
-            {{> relation}}
-        {{/each}} 
-        {{#each suggestedRelations}}
-            {{> relation}}
-        {{/each}} 
-   </div>
-  </div>
-  <div class="idea-related">
-    {{> ideaList ideas=expandedIdeas}}
-  </div>
-</li>
+  <li class="ideaContainer {{hidden}}">
+    <div class="idea-body">
+      <div class="idea">{{{bolded_text}}}</div>
+      <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas label label-primary">subideas <span>({{numChildren}})</span></a></div>
+      <div class="date right">{{formatDate}} </div>
+      
+      <div class="relations">
+      {{> entryAutoComplete id=_id}}
+          {{#each manuallyReviewedRelations}}
+              {{> relation}}
+          {{/each}} 
+          {{#each suggestedRelations}}
+              {{> relation}}
+          {{/each}} 
+     </div>
+    </div>
+    <div class="idea-related">
+      {{> ideaList ideas=expandedIdeas}}
+    </div>
+  </li>
 </template>
+
 
 <template name="relation">
  
@@ -39,50 +42,116 @@
 
 
 <template name="idea_form">
-  <form>
-    <textarea placeholder="Add idea here..." class="idea_text"> </textarea> 
-    <input type="submit"> 
+  <form  role="form" >
+    <div class="form-group">
+      <textarea placeholder="Add idea here..." class="idea_text form-control"></textarea> 
+    </div>
+    <input type="submit"  class="btn btn-default"> 
   </form>
+  <hr>
 </template>
 
 
 
 <template name="idea_board">
+  <nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
+        <li class="{{#unless isListView}}active{{/unless}}"><a href="?graph">Graph View</a></li>
+        <li><a href="#" class="import-link">Import</a></li>
   
-  <div>
-    <div>Path: 
-      {{#each breadcrumb}} 
-        {{#unless last}}<a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a>  &gt;
-        {{else}}<b>{{title}}</b>{{/unless}}
-      {{/each}} 
+        <div class="import-container {{importShow}}">
+          
+          <textarea class="import-nodes">Nodes (json)
+          </textarea>
+          <textarea class="import-edges">Edges (json)
+          </textarea> <br>
+          <input type="text" class="import-text-param" placeholder="(text param)"/>
+          <input type="text" class="import-detail-param" placeholder="(detail param)"/>
+          <input type="button" class="import-submit" value="Import" />
+        </div>
 
+      </ul>
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search"  name="search">
+        </div>
+      </form>
     </div>
-    <div> <input type="text" name="search"> Search</div>  
 
-      {{> idea_form}}
+  </nav>
 
-  <div>
-      {{#if ideas}}
-          {{> ideaList ideas=ideas}}
-      {{else}}
-           0 ideas.
-    {{/if}}
-  </div>
+  <div class="container">
+    <div>
+      <div>
+        <ol class="breadcrumb">
+          {{#each breadcrumb}} 
+            {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
+            {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
+          {{/each}} 
+        </ol>
+      </div>
+    </div>
+
+    {{#if isListView}}
+      {{> listView ideas=ideas}}
+    {{else}}
+      {{> graphView ideas=ideas}}
+     {{/if}}
     
   </div>
   
 </template>
 
+<template name="listView">
+  <div id="list-view">
+    {{> idea_form}}
+
+    <div>
+      {{#if ideas}}
+        {{> ideaList ideas=ideas}}
+      {{else}}
+        0 ideas.
+      {{/if}}
+    </div>
+  </div>
+</template>
+
 
 <template name="ideaList">
   <ul class="idea-list">
-
-
-      {{#each ideas}}
-        {{> idea}}
-      {{/each}}
-
-
+    {{#each ideas}}
+      {{> idea}}
+    {{/each}}
   </ul>
 </template>
 
+<template name="graphView">
+      <div id="graph-view">
+
+        {{> graph ideas=ideas}} 
+      
+      </div>
+</template>
+
+<template name="graph">
+  <svg id="viz"></svg>
+
+  <div style="position: absolute; top: 119px; right: 54px; width: 290px; background: white;padding: 15px;">
+    {{#if selected_idea}}
+    <div>
+      <!-- <h3>Selection: {{selected_idea.index}}</h3> -->
+      <h3>
+        {{selected_idea.idea.title}}
+      </h3>
+      <p>
+        {{selected_idea.idea.text}}
+      </p>
+    </div>
+    {{/if}}
+  </div>
+</template>

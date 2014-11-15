@@ -1,0 +1,10 @@
+<template name="entryAutoComplete">
+<div class = "auto-complete-container" >
+  <input class='autoCompEntry newEntry{{id}}' id='autocmpl{{id}}' type='text' value='' placeholder="+ Add Related" autocomplete='off'>
+  <div class="autoFaculty {{showideaSearch}}">
+    {{#each filteredIdeas}}
+      <div class="filtFac"> {{{searchCacheBold}}}</div>
+    {{/each}}
+  </div>
+</div>
+</template>
