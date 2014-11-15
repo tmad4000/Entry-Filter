@@ -1,0 +1,22 @@
+<template name="listView">
+  <div id="list-view">
+    {{> idea_form}}
+
+    <div>
+      {{#if ideas}}
+        {{> ideaList ideas=ideas}}
+      {{else}}
+        0 ideas.
+      {{/if}}
+    </div>
+  </div>
+</template>
+
+
+<template name="ideaList">
+  <ul class="idea-list">
+    {{#each ideas}}
+      {{> idea}}
+    {{/each}}
+  </ul>
+</template>

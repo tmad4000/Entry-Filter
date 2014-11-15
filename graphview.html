@@ -1,0 +1,25 @@
+<template name="graphView">
+      <div id="graph-view">
+
+        {{> graph ideas=ideas}} 
+      
+      </div>
+</template>
+
+<template name="graph">
+  <svg id="viz"></svg>
+
+  <div style="position: absolute; top: 119px; right: 54px; width: 290px; background: white;padding: 15px;">
+    {{#if selected_idea}}
+    <div>
+      <!-- <h3>Selection: {{selected_idea.index}}</h3> -->
+      <h3>
+        {{selected_idea.idea.title}}
+      </h3>
+      <p>
+        {{selected_idea.idea.text}}
+      </p>
+    </div>
+    {{/if}}
+  </div>
+</template>
