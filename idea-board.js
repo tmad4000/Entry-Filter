@@ -59,7 +59,7 @@ Router.route('/idea/:_id(*)', function () {
       },
 
       hidden: function() {
-        return this.hidden;
+        return this.hidden ? 'hidden':'';
       },
 
       title: function() {
@@ -80,7 +80,7 @@ Router.route('/idea/:_id(*)', function () {
       var manuallyReviewedRelations={}
       for (key in this.relations) {
         if (this.relations[key].reviewed && this.relations[key].weight > 0)
-          console.log(this.relations[key].weight)
+          // console.log(this.relations[key].weight)
           manuallyReviewedRelations[key] = this.relations[key];
       }
 
@@ -202,25 +202,44 @@ Router.route('/idea/:_id(*)', function () {
       var expandedIdeas=Template.instance().expandedIdeas
       var expandedIdeasRay=expandedIdeas.get()
 
-      var idExpanded=false
-      var i 
+      // figure out if the currently clicked idea is already expanded
+      var idExpanded=false;
+      var hidden = true;
+      var i;
       for( i = 0; i < expandedIdeasRay.length; i++){
         if(expandedIdeasRay[i]._id === idToExpand){
           idExpanded = true;
+          if (!expandedIdeasRay[i].hidden) {
+            hidden = false;
+          }
           break;
         }
       }
 
-      if(idExpanded){
-
-        $targetLink.parent().removeClass("expanded"); //#hack
-        expandedIdeasRay.splice(i, 1);
-        expandedIdeas.set(expandedIdeasRay);
-      } else {
+     if(hidden){
         $targetLink.parent().addClass("expanded"); //#hack
-        expandedIdeasRay.unshift(Ideas.findOne({_id:idToExpand}));
+        if(!idExpanded) {
+          var newExpIdea=Ideas.findOne({_id:idToExpand});
+          newExpIdea.hidden=false;
+          expandedIdeasRay.unshift(newExpIdea);
+        }
+        else {
+          expandedIdeasRay[i].hidden=false;
+        }
+
         expandedIdeas.set(expandedIdeasRay);
     }
+    else {
+        
+        $targetLink.parent().removeClass("expanded"); //#hack
+
+        //expandedIdeasRay.splice(i, 1);
+        expandedIdeasRay[i].hidden = true;
+        
+        expandedIdeas.set(expandedIdeasRay);
+    }
+
+    return false;
 
   },
     // 'click a': function(event) {
@@ -335,14 +354,14 @@ Router.route('/idea/:_id(*)', function () {
         query.text = {"$regex": new RegExp(Session.get("search_input"), 'i')}
         var searchedIdeas = Ideas.find(query, {sort: {date_created: -1}}).fetch();
         allIdeas.forEach(function(idea, i) {
-          idea.hidden = 'hidden';
+          idea.hidden = true;
           allIdeas[i] = idea;
 
         });
         searchedIdeas.forEach(function(sidea) {
           var ideaIndex = allObjects[sidea._id];
           var idea = allIdeas[ideaIndex]; 
-          idea.hidden = '';
+          idea.hidden = false;
 
           allIdeas[ideaIndex] = idea;
 

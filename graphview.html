@@ -13,12 +13,10 @@
     {{#if selected_idea}}
     <div>
       <!-- <h3>Selection: {{selected_idea.index}}</h3> -->
-      <h3>
-        {{selected_idea.idea.title}}
-      </h3>
-      <p>
-        {{selected_idea.idea.text}}
-      </p>
+
+      {{#with selected_idea.idea}}
+        {{> idea}}
+      {{/with}}
     </div>
     {{/if}}
   </div>

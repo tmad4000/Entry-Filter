@@ -23,7 +23,6 @@ Router.route('/idea/:slug*', function() {
       current_idea = Ideas.findOne({slug: idea_slug});
     }
 
-
     if(this.params.query.graph !== undefined) {
       Session.set("current_view", 'graph')
     }

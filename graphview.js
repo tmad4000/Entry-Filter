@@ -3,7 +3,7 @@ if (Meteor.isClient) {
 Template.graph.helpers({
     selected_idea: function(){
       return Session.get("selected_idea")
-      return "323e092u34"
+      // return "323e092u34"
     }
   })
 
