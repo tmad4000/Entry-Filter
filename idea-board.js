@@ -22,15 +22,9 @@ Router.route('/idea/:_id(*)', function () {
 });*/
 
 
-
-
   if (Meteor.isClient) {
-
-
-
-
     Session.setDefault("current_idea", {_id: null});
-    Session.setDefault("current_view", "list");
+    Session.setDefault("current_view", DEFAULT_VIEW);
     Session.setDefault("importShow", false);
 
 

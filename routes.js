@@ -4,7 +4,7 @@ Router.route('/', function(){
 
 Router.route('/idea/:slug*', function() {
 
-  DEFAULT_VIEW="list"
+
   // Only on the first application load
   if(!$.inArray(Session.get("current_view"),['list','graph'])) {
     Session.setDefault("current_view", DEFAULT_VIEW);
