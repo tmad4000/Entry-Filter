@@ -1,7 +1,6 @@
 //Ideas.update({_id: "iN9whhZMNjJ4e4wPy"}, {$set: {relatedIdeas: {}});
 var ideas = hackathonIdeaList;
 Ideas = new Meteor.Collection("ideas");
-// Ideas.remove();
 
 
 insertIdea = function(ideaData){
@@ -45,7 +44,7 @@ insertRelationBi = function(src, target, relationship) {
 if (Meteor.isServer) {
 
     Meteor.startup(function() {
-        // Ideas.remove({});   
+        Ideas.remove({});   
         iray=[]
         if (Ideas.find().count() === 0) {
             root_id = insertIdea({text: "Hackathon Ideas"});
