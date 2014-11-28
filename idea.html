@@ -1,5 +1,6 @@
 <template name="idea">
-  <li class="ideaContainer {{hidden}}">
+  <div class="ideaContainer {{hidden}}">
+    <div class="statusIndicator {{status}}"></div>
     <div class="idea-body">
       <div class="idea">{{{bolded_text}}}</div>
       <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas label label-primary">subideas <span>({{numChildren}})</span></a></div>
@@ -18,7 +19,7 @@
     <div class="idea-related">
       {{> ideaList ideas=expandedIdeas}}
     </div>
-  </li>
+  </div>
 </template>
 
 
