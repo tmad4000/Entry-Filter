@@ -56,7 +56,7 @@ Template.graph.helpers({
 
     // line displayed when dragging new nodes
     var drag_line = svg.append('svg:path')
-      .attr('class', 'link dragline hidden')
+      .attr('class', 'dragline hidden')
       .attr('d', 'M0,0L0,0');
 
     var force = d3.layout.force();

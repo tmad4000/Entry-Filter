@@ -44,7 +44,7 @@ insertRelationBi = function(src, target, relationship) {
 if (Meteor.isServer) {
 
     Meteor.startup(function() {
-        Ideas.remove({});   
+        // Ideas.remove({});   
         iray=[]
         if (Ideas.find().count() === 0) {
             root_id = insertIdea({text: "Hackathon Ideas"});

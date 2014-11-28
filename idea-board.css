@@ -46,7 +46,7 @@ text {
 	-moz-user-select: none;
 }
 
-.link {
+.link, .dragline {
   stroke: #aaa;
   stroke-width: 1.5px;
 }
