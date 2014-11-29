@@ -59,7 +59,10 @@ Template.graph.helpers({
       .attr('class', 'dragline hidden')
       .attr('d', 'M0,0L0,0');
 
-    var force = d3.layout.force();
+    var force = d3.layout.force()
+        .distance(80)
+        .charge(-400)
+        .size([width, height])
 
     // define arrow markers for graph links
     svg.append('svg:defs').append('svg:marker')
@@ -108,12 +111,16 @@ Template.graph.helpers({
 
     var fill = d3.scale.category10();
     // console.log(ideas)
+    var firsttime = true;
+    var data = [], links = [];
+
+    var all_data = {};
 
     Tracker.autorun(function () {
       var id = Session.get("current_idea");
       if(!id) return;
 
-      console.log(id, 'current idea id')
+      // console.log(id, 'current idea id')
       var ideas = Ideas.find(
         { parent_id: id._id }, 
         {sort: {date_created: 1}}
@@ -126,25 +133,30 @@ Template.graph.helpers({
 
       // var related_ideas = Ideas.find({_id: {$in: related_ids}}).fetch();
       // console.log('related idea', related_ideas, related_ids);
-
-      var indexmap = {};
-      var data = ideas.map(function(e, i){
-        indexmap[e._id] = i;
-        return { index: i, weight: 1, idea: e, width: 50, height: 20 }
+      
+      ideas.forEach(function(idea, i){
+        if(!all_data[idea._id]){
+          all_data[idea._id] = {
+            weight: 1,
+            width: 50,
+            height: 20
+          }
+        }
+        all_data[idea._id].idea = idea;
       });
-      
-      
-      var links = _.flatten(ideas.map(function(idea, i){
+
+      var data = Object.keys(all_data).map(function(key){ return all_data[key] });
+
+      links = _.flatten(ideas.map(function(idea, i){
         return Object.keys(idea.relations || {}).filter(function(relative){
-          return relative in indexmap
+          return relative in all_data
         }).map(function(relative){
           return {
-            source: i,
-            target: indexmap[relative]
+            source: all_data[idea._id],
+            target: all_data[relative]
           }
         })
       }));
-
 
       function tick(e) {
         node.attr("cx", function(d) { return d.x; })
@@ -165,14 +177,9 @@ Template.graph.helpers({
       }
 
       force
-        .distance(80)
-        .charge(-400)
         .nodes(data)
         .links(links)
-        .size([width, height])
         .on("tick", tick)
-        // .resume()
-        .start()
 
       
       var link = svg.selectAll(".link")
@@ -266,7 +273,7 @@ Template.graph.helpers({
 
       labels.exit().remove();
 
-      force.resume()
+      force.start()
 
 
     });
