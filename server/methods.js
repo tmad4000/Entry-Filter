@@ -1,6 +1,6 @@
 Meteor.methods({
 
-'ideaSearch': function(data) {
+'ideaSearch': function(data, current_idea) {
     console.log('ideaSearch');
 
     var limit = 25;
@@ -10,7 +10,14 @@ Meteor.methods({
     // console.log(data.query);
     retVal = Ideas.find(data.query, data.other).fetch();
     console.log(retVal.length)
-    return _.sortBy(retVal, function(obj) {return obj.searchCache});
+
+    retVal = _.sortBy(retVal, function(obj) {return obj.searchCache}); // alphabetical 
+    // retVal = _.sortBy(retVal, function(obj) {return -1*obj.date_created}); // date 
+    
+    if (CROSSBOARD_CONNECTIONS) { // Sorts by whether in current box, alphabetical
+      retVal = _.sortBy(retVal, function(obj) {return obj.parent_id == current_idea._id ? 0 : 1});
+    } 
+    return retVal;
   },
 
 

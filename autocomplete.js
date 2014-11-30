@@ -52,7 +52,8 @@ if (Meteor.isClient) {
       }
       var data = {type: this.id, query: query};
       // console.log('filtered', Meteor.call('ideaSearch', data));
-      Meteor.call('ideaSearch', data, function(e, options) {
+      console.log("clientcurrent",Session.get("current_idea"));
+      Meteor.call('ideaSearch', data, Session.get("current_idea"), function(e, options) {
         t.options = options;
         t.optionsDep.changed();
       });
