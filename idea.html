@@ -1,8 +1,8 @@
 <template name="idea">
   <div class="ideaContainer {{hidden}}">
-    <a class="statusIndicator s{{status}}" href = "#"></a>
+    <a class="statusIndicator s{{status}}" href="#"></a>
     <div class="idea-body">
-      <div class="idea" contenteditable="true">{{{bolded_text}}}</div>
+      <div class="idea">{{{bolded_text}}}</div>
       <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas label label-primary">subideas <span>({{numChildren}})</span></a></div>
       <div class="date right">{{formatDate}} </div>
       

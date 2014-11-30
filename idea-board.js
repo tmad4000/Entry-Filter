@@ -41,6 +41,8 @@ Router.route('/idea/:_id(*)', function () {
           text = text.replace(new RegExp('</b>', 'gi'), '');
           text = text.replace(new RegExp("(" + search_input + ")", 'gi'), '<b>$1</b>');
         }
+        //nl2br
+        text=text.replace(/\n/g,"<br>");
         return text;
       },
       splitted: function() {
@@ -216,32 +218,32 @@ Router.route('/idea/:_id(*)', function () {
         }
       }
 
-     if(hidden){
-        $targetLink.parent().addClass("expanded"); //#hack
-        if(!idExpanded) {
-          var newExpIdea=Ideas.findOne({_id:idToExpand});
-          newExpIdea.hidden=false;
-          expandedIdeasRay.unshift(newExpIdea);
-        }
-        else {
-          expandedIdeasRay[i].hidden=false;
-        }
+      if(hidden){
+          $targetLink.parent().addClass("expanded"); //#hack
+          if(!idExpanded) {
+            var newExpIdea=Ideas.findOne({_id:idToExpand});
+            newExpIdea.hidden=false;
+            expandedIdeasRay.unshift(newExpIdea);
+          }
+          else {
+            expandedIdeasRay[i].hidden=false;
+          }
 
-        expandedIdeas.set(expandedIdeasRay);
-    }
-    else {
-        
-        $targetLink.parent().removeClass("expanded"); //#hack
+          expandedIdeas.set(expandedIdeasRay);
+      }
+      else {
+          
+          $targetLink.parent().removeClass("expanded"); //#hack
 
-        //expandedIdeasRay.splice(i, 1);
-        expandedIdeasRay[i].hidden = true;
-        
-        expandedIdeas.set(expandedIdeasRay);
-    }
+          //expandedIdeasRay.splice(i, 1);
+          expandedIdeasRay[i].hidden = true;
+          
+          expandedIdeas.set(expandedIdeasRay);
+      }
 
-    return false;
+      return false;
 
-  },
+    },
     // 'click a': function(event) {
       // https://github.com/EventedMind/iron-location
       // history.pushState({}, '', $(event.target).attr("href"));
@@ -275,27 +277,78 @@ Router.route('/idea/:_id(*)', function () {
 
       return false
     },
-    'contextmenu' : function(){
-     return false;
-  }
+
+    'contextmenu .statusIndicator' : function(){
+       return false;
+    },
+
+    'keyup .statusIndicator' : function(e) {
+      e.preventDefault();
+      var incNum = 1;
+
+      switch(e.which){
+        case 1: //left click
+          incNum = 1;
+          break;
+        case 3: //right click
+          incNum = -1;
+          break;
+      }
+
+      Ideas.update({_id:this._id},{$inc:{status:  incNum}});
+      var currentStatus = Ideas.findOne({_id:this._id}).status
+      if (currentStatus > 3) //#todo decide whether to include rejected
+        Ideas.update({_id:this._id},{$set:{status: 0}});
+      else if (currentStatus < 0) //#todo decide whether to include rejected
+        Ideas.update({_id:this._id},{$set:{status: 3}});
+
+      return false
+    },
   })
 
 
 
 
+  Template.idea_form.rendered=function(){
+    $("textarea.idea_text").focus();
+  };
 
   Template.idea_form.events({
     'submit': function(event) {
       event.preventDefault();
       $input = $('.idea_text'); 
-      var ideaData = {
-        text: $input.val().trim(),
-        parent_id: Session.get("current_idea")["_id"], 
-        date_created: new Date().getTime(),
-        status: 0 // open, pending, rejected, filled
-      };
 
-      insertIdea(ideaData);
+      text=$input.val().trim();
+      if(text.indexOf("\n")!=-1) {
+        var r = confirm("It looks like you're pasting in a list of ideas. Would you like to split into multiple ideas, one per newline?");
+      }
+
+      if (r == true) {
+        //hit OK
+        var allIdeas = text.split("\n");
+        _.each(allIdeas, function(ideaTxt){
+            var ideaData = {
+            text: ideaTxt,
+            parent_id: Session.get("current_idea")["_id"], 
+            date_created: new Date().getTime(),
+            status: 0 // open, pending, rejected, filled
+            };
+
+           insertIdea(ideaData);
+        })
+
+      } else {
+         var ideaData = {
+          text: text,
+          parent_id: Session.get("current_idea")["_id"], 
+          date_created: new Date().getTime(),
+          status: 0 // open, pending, rejected, filled
+        };
+
+        insertIdea(ideaData);
+      }
+
+     
 
       $input.val('');
       $('input[name=search]').val('');
@@ -316,7 +369,22 @@ Router.route('/idea/:_id(*)', function () {
       var elem = $(e.currentTarget);
       var val = elem.val();
       $('input[name=search]').val(val);
-    }
+    },
+
+    // 'paste textarea.idea_text': function(e,t) {
+    //   var element = e.currentTarget;
+    //   setTimeout(function () {
+    //     var text = $(element).val();
+    //     console.log(text);
+    //     var r = confirm("It looks like you're pasting in a list of ideas. Would you like to split into multiple ideas, one per newline?");
+    //     if (r == true) {
+    //       x = "You pressed OK!";
+    //     } else {
+    //       x = "You pressed Cancel!";
+    //     }
+    //   }, 100);
+    // }
+
   })
 
   Template.idea_board.created = function() {
