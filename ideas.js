@@ -8,6 +8,7 @@ insertIdea = function(ideaData){
     //#validate #hack?
     if (!ideaData.text) return; 
     if (!ideaData.status) ideaData.status = 0;
+    if (!ideaData.searchCache) ideaData.searchCache = ideaData.text;
 
     ideaData.title=ideaData.text.substr(0,50);
 
@@ -43,7 +44,7 @@ insertRelationBi = function(src, target, relationship) {
 if (Meteor.isServer) {
 
     Meteor.startup(function() {
-        Ideas.remove({});   
+        // Ideas.remove({});   
         iray=[]
         if (Ideas.find().count() === 0) {
             root_id = insertIdea({text: "Hackathon Ideas"});

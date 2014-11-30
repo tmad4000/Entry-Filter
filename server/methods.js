@@ -7,7 +7,7 @@ Meteor.methods({
     data.other = {limit: limit}
 
     var retVal = [];
-
+    // console.log(data.query);
     retVal = Ideas.find(data.query, data.other).fetch();
     console.log(retVal.length)
     return _.sortBy(retVal, function(obj) {return obj.searchCache});
