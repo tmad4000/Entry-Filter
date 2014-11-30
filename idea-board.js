@@ -273,6 +273,8 @@ Router.route('/idea/:_id(*)', function () {
       insertIdea(ideaData);
 
       $input.val('');
+      $('input[name=search]').val('');
+      $('input[name=search]').keyup();
     },
     'keyup textarea.idea_text': function(e) {
       var elem = $(e.currentTarget);

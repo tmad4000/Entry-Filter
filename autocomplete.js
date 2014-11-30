@@ -46,7 +46,8 @@ if (Meteor.isClient) {
         return t.options;
       }
       t.lastSearch = input;
-      var query = {'searchCache': {$regex: input, $options: 'i'}};
+      var query = {'searchCache': {$regex: input, $options: 'i'},
+                  'parent_id': Session.get("current_idea")._id};
       var data = {type: this.id, query: query};
       // console.log('filtered', Meteor.call('ideaSearch', data));
       Meteor.call('ideaSearch', data, function(e, options) {

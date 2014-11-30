@@ -7,6 +7,7 @@ insertIdea = function(ideaData){
 
     //#validate #hack?
     if (!ideaData.text) return; 
+    if (!ideaData.parent_id) ideaData.parent_id = null; 
     if (!ideaData.status) ideaData.status = 0;
     if (!ideaData.searchCache) ideaData.searchCache = ideaData.text;
 
