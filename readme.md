@@ -22,3 +22,5 @@ meteor add reactive-var
 
 ==Notes==
 In meteor, lib directory is loaded first, DEFAULT_VIEW is set in lib/settings.js
+
+mongorestore -h 127.0.0.1 --port 3001 -d meteor dump/meteor
