@@ -253,6 +253,31 @@ Router.route('/idea/:_id(*)', function () {
       filter['parent_id'] = $(event.target).data("idea-id");
       Session.set("current_idea", filter); */
     // }
+    'mousedown .statusIndicator' : function(e) {
+      e.preventDefault();
+      var incNum = 1;
+
+      switch(e.which){
+        case 1: //left click
+          incNum = 1;
+          break;
+        case 3: //right click
+          incNum = -1;
+          break;
+      }
+
+      Ideas.update({_id:this._id},{$inc:{status:  incNum}});
+      var currentStatus = Ideas.findOne({_id:this._id}).status
+      if (currentStatus > 3) //#todo decide whether to include rejected
+        Ideas.update({_id:this._id},{$set:{status: 0}});
+      else if (currentStatus < 0) //#todo decide whether to include rejected
+        Ideas.update({_id:this._id},{$set:{status: 3}});
+
+      return false
+    },
+    'contextmenu' : function(){
+     return false;
+  }
   })
 
 
@@ -275,8 +300,19 @@ Router.route('/idea/:_id(*)', function () {
       $input.val('');
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
+      $('textarea.idea_text').focus()
     },
-    'keyup textarea.idea_text': function(e) {
+    'keyup textarea.idea_text': function(e,t) {
+      //#todo
+      // if (e.ctrlKey && e.keyCode === 13) {
+      //   window.afa=$(t).find('form.idea-form')
+      //   console.log(aa=$(t).find('form.idea-form').)
+      //   $(t).find('form.idea-form').submit();
+      //   return false;
+      // }
+
+
+
       var elem = $(e.currentTarget);
       var val = elem.val();
       $('input[name=search]').val(val);
