@@ -27,6 +27,28 @@
   background-color: rgb(205, 56, 56);
 }
 
+.statusIndicator.s0 { /*Status: not acknowledged*/
+  /*background:#AAA*/
+  background:transparent;
+  border:1px solid #DDDDDD;
+}
+.statusIndicator.s1 { /*Status: acknowledged*/
+  background:#FF0;
+  border:1px solid #FF0;
+}
+.statusIndicator.s2 { /*Status: acknowledged and in progress*/
+   background: #2eabe6;
+  border:1px solid #2eabe6;
+}
+.statusIndicator.s3 { /*Status: complete*/
+  background:#0F0;
+  border:1px solid #0F0;
+}
+.statusIndicator.s4 { /*Status: rejected*/
+  background:#D41528;
+  border:1px solid #D41528;
+}
+
 
 div.right {
 	float: right;
