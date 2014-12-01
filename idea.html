@@ -3,10 +3,12 @@
     <a class="statusIndicator s{{status}}" href="#"></a>
     <div class="idea-body">
       <div class="idea">{{{bolded_text}}}</div>
-      <div class="subideas right"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas label label-primary">subideas <span>({{numChildren}})</span></a></div>
+      
+
       <div class="date right">{{formatDate}} </div>
       
       <div class="relations">
+      <div class="subideas left"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">subideas <span>({{numChildren}})</span></a></div>
       {{> entryAutoComplete id=_id}}
           {{#each manuallyReviewedRelations}}
               {{> relation}}
@@ -98,6 +100,7 @@
         </ol>
       </div>
     </div>
+
 
     {{#if isListView}}
       {{> listView ideas=ideas}}

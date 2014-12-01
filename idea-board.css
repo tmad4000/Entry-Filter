@@ -20,8 +20,13 @@ div.idea {
 }
 */
 
+div.numIdeas {
+	color:#CCC;
+	text-align:right;
+}
+
 .date {
-	color: gray;
+	color: #CCC;
 }
 
 
@@ -73,12 +78,21 @@ div.right {
 	margin-left: 5px;
 }
 
+div.left {
+	float: left;
+	margin-right: 5px;
+}
+
 div.subideas {
 }
 
 a.subideas{
   text-decoration: none;
-  
+  color:#AAA;
+}
+a.subideas:hover{
+  text-decoration: none;
+  color:#428bca;
 }
 
 text {
@@ -115,6 +129,9 @@ text {
 .relation a {
 	text-decoration: none;
 
+}
+
+div.relations {
 }
 
 .node.fixed {

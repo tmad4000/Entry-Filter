@@ -373,6 +373,7 @@ Router.route('/idea/:_id(*)', function () {
       var elem = $(e.currentTarget);
       var val = elem.val();
       $('input[name=search]').val(val)
+      $('input[name=search]').keyup()
       // setTimeout(function() {$('input[name=search]').val(val)},100); //partially mitigate lag?
     },
 
@@ -463,6 +464,7 @@ Router.route('/idea/:_id(*)', function () {
       });
 
       if (!Session.get('search_input')) {
+        allIdeas.searchedIdeasLength=allIdeas.length
         return allIdeas;
       }
       else {
@@ -483,10 +485,13 @@ Router.route('/idea/:_id(*)', function () {
 
         });
 
+        allIdeas.searchedIdeasLength=searchedIdeas.length;
+
         return allIdeas
       }
     },
 
+  
     breadcrumb: function() {
 
       var breadcrumb=[];
@@ -536,13 +541,14 @@ Router.route('/idea/:_id(*)', function () {
   });
 
   Template.idea_board.events({
-    'keyup': function () {
+    'keyup input[name=search]': function () {
       // increment the counter when button is clicked
       Session.set("search_input", $('input[name=search]').val());
     },
     'click a.breadcrumb': function(e,t){
 
       $('input[name=search]').val('');
+      $('input[name=search]').keyup();
     },
 
  // 'a.breadcrumb': function(){

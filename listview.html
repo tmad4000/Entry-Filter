@@ -3,11 +3,18 @@
     {{> idea_form}}
 
     <div>
-      {{#if ideas}}
-        {{> ideaList ideas=ideas}}
-      {{else}}
-        0 ideas.
-      {{/if}}
+
+      <div class="numIdeas">
+         {{#if ideas}}
+          
+              Showing {{ideas.searchedIdeasLength}} / {{ideas.length}} ideas
+
+          {{else}}
+            0 ideas.
+          {{/if}}
+      </div>
+
+       {{> ideaList ideas=ideas}}
     </div>
   </div>
 </template>
