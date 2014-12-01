@@ -1,8 +1,24 @@
 /* CSS declarations go here */
 div.idea {
   display: inline;
+	/*-webkit-touch-callout: default;
+	-webkit-user-select: text;
+	-khtml-user-select: text;
+	-moz-user-select: text;
+	-ms-user-select: text;
+	user-select: text;
+*/
 }
 
+/*.idea-list * {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+*/
 
 .date {
 	color: gray;

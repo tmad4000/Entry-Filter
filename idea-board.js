@@ -190,11 +190,14 @@ Router.route('/idea/:_id(*)', function () {
   }
 
   Template.idea.rendered=function() {
-    
-    //slideDown(1000);
+    // $(this.find('.ideaContainer')).slideDown(1000);
   }
 
   Template.idea.events({
+    'click .subideas': function(e,t){
+      $('input[name=search]').val('');
+      $('input[name=search]').keyup();
+    },
     'click .relation>a': function(event) {
       var $targetLink=$(event.target)
       var idToExpand=$targetLink.data("id");
@@ -282,6 +285,7 @@ Router.route('/idea/:_id(*)', function () {
        return false;
     },
 
+
     'keyup .statusIndicator' : function(e) {
       e.preventDefault();
       var incNum = 1;
@@ -368,7 +372,8 @@ Router.route('/idea/:_id(*)', function () {
 
       var elem = $(e.currentTarget);
       var val = elem.val();
-      $('input[name=search]').val(val);
+      $('input[name=search]').val(val)
+      // setTimeout(function() {$('input[name=search]').val(val)},100); //partially mitigate lag?
     },
 
     // 'paste textarea.idea_text': function(e,t) {
@@ -534,6 +539,10 @@ Router.route('/idea/:_id(*)', function () {
     'keyup': function () {
       // increment the counter when button is clicked
       Session.set("search_input", $('input[name=search]').val());
+    },
+    'click a.breadcrumb': function(e,t){
+
+      $('input[name=search]').val('');
     },
 
  // 'a.breadcrumb': function(){
