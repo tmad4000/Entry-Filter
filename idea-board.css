@@ -20,8 +20,12 @@ nav .breadcrumb { /* #hack */
 	margin-bottom: 10px;
 }
 
-.dataView li:first-child {
-	margin-left: 100px
+.nav-tabs.dataViewMode>li:first-child {
+	margin-left: 123px
+}
+
+.nav-tabs.dataViewMode>li {
+	/*float:left*/
 }
 
 div.idea {
