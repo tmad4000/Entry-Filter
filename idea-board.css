@@ -1,4 +1,29 @@
 /* CSS declarations go here */
+
+.clearSearch  {
+	height: 30px;
+	float: left;
+	width: 20px;
+	vertical-align: baseline;
+	line-height: 30px;
+	font-size: 32px;
+	color: #A1B9ED;
+	font-family: Arial, Sans-Serif;
+	background: transparent;
+	opacity: 0.6;
+
+}
+
+
+nav .breadcrumb { /* #hack */
+	margin-top: 7px;
+	margin-bottom: 10px;
+}
+
+.dataView li:first-child {
+	margin-left: 100px
+}
+
 div.idea {
   display: inline;
 	/*-webkit-touch-callout: default;

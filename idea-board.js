@@ -197,6 +197,7 @@ Router.route('/idea/:_id(*)', function () {
     'click .subideas': function(e,t){
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
+      $('textarea.idea_text').focus();
     },
     'click .relation>a': function(event) {
       var $targetLink=$(event.target)
@@ -357,7 +358,7 @@ Router.route('/idea/:_id(*)', function () {
       $input.val('');
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
-      $('textarea.idea_text').focus()
+      $('textarea.idea_text').focus();
     },
     'keyup textarea.idea_text': function(e,t) {
       //#todo
@@ -549,6 +550,8 @@ Router.route('/idea/:_id(*)', function () {
 
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
+      
+      $('textarea.idea_text').focus();
     },
 
  // 'a.breadcrumb': function(){

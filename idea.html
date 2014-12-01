@@ -46,12 +46,11 @@
 
 <template name="idea_form">
   <form role="form" class="idea-form" >
-    <div class="form-group">
+    <div class="form-group" style="margin-bottom:5px">
       <textarea placeholder="Add idea here..." class="idea_text form-control"></textarea> 
     </div>
-    <input type="submit"  class="btn btn-default"> 
+    <input type="submit"  class="btn btn-default" style="float:left;"> 
   </form>
-  <hr>
 </template>
 
 
@@ -60,11 +59,16 @@
   <nav class="navbar navbar-default navbar-static-top" role="navigation">
     <div class="container">
       <div class="navbar-header">
-        <a class="navbar-brand" href="/"><b>Idea</b> Board @ <b>YHack</b> 2014</a>
+        <a class="navbar-brand" href="/"><b>Idea</b>Board</a>
       </div>
-      <ul class="nav navbar-nav">
-        <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
-        <li class="{{#unless isListView}}active{{/unless}}"><a href="?graph">Graph View</a></li>
+        <ol class="breadcrumb navbar-left">
+          {{#each breadcrumb}} 
+            {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
+            {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
+          {{/each}} 
+        </ol>
+
+      <ul class="nav navbar-nav navbar-right">
         <li><a href="#" class="import-link">Import</a></li>
         <li><a href="#"><input type="button" class="suggest-relations" value="Suggest relations"></a></li>
   
@@ -83,6 +87,8 @@
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="text" class="form-control" placeholder="Search"  name="search">
+<!-- todo -->
+<!--           <span class="clearSearch"><a href="#" class="clear" style="text-decoration:none;">×</a></span> -->
         </div>
       </form>
     </div>
@@ -92,16 +98,15 @@
   <div class="container">
     <div>
       <div>
-        <ol class="breadcrumb">
-          {{#each breadcrumb}} 
-            {{#unless last}}<li><a class="breadcrumb" href="/idea{{path}}" data-idea-id="{{_id}}">{{title}}</a></li>
-            {{else}}<li><b class="breadcrumb" >{{title}}</b></li>{{/unless}}
-          {{/each}} 
-        </ol>
+
       </div>
     </div>
-
-
+{{> idea_form}}
+<ul class="nav nav-tabs dataView" >
+      
+        <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
+        <li class="{{#unless isListView}}active{{/unless}}"><a href="?graph">Graph View</a></li>
+        </ul>
     {{#if isListView}}
       {{> listView ideas=ideas}}
     {{else}}
