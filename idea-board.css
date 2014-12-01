@@ -18,6 +18,17 @@
 nav .breadcrumb { /* #hack */
 	margin-top: 7px;
 	margin-bottom: 10px;
+	background-color:transparent;
+}
+
+nav .navbar-brand {
+	padding-right: 0;
+}
+
+.breadcrumb>li:before {
+	padding: 0 5px;
+	color: #ccc;
+	content: "/";
 }
 
 .nav-tabs.dataViewMode>li:first-child {

@@ -506,7 +506,7 @@ Router.route('/idea/:_id(*)', function () {
         currentIdeaIter=parentIdea;
       } 
 
-      breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
+      // breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
 
       for(var i=1;i<breadcrumb.length;i++) {
         breadcrumb[i].path=breadcrumb[i-1].path+breadcrumb[i].slug+"/";
@@ -550,7 +550,7 @@ Router.route('/idea/:_id(*)', function () {
 
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
-      
+
       $('textarea.idea_text').focus();
     },
 
