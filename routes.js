@@ -29,6 +29,12 @@ Router.route('/idea/:slug*', function() {
     else if (this.params.query.list !== undefined) {
       Session.set("current_view",  'list')
     }
+    // else if (this.params.query.date !== undefined) {
+    //   Session.set("current_view",  'date')
+    // }
+    // else if (this.params.query.status !== undefined) {
+    //   Session.set("current_view",  'status')
+    // }
     else {
       if(Session.get("current_view")!==DEFAULT_VIEW)
         this.redirect('/idea/'+this.params.slug+"?"+Session.get("current_view"));

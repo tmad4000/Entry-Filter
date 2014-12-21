@@ -11,4 +11,6 @@ mrt:moment
 iron:router
 reactive-var
 d3
+accounts-ui
+accounts-facebook
 
