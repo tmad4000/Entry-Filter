@@ -187,6 +187,7 @@ Router.route('/idea/:_id(*)', function () {
 
   Template.idea.created=function() {
     this.expandedIdeas=new ReactiveVar([]);
+    this.timeout = null;
   }
 
   Template.idea.rendered=function() {
@@ -371,10 +372,13 @@ Router.route('/idea/:_id(*)', function () {
 
 
 
-      var elem = $(e.currentTarget);
-      var val = elem.val();
-      $('input[name=search]').val(val)
-      $('input[name=search]').keyup()
+      if (t.timeout) clearTimeout(t.timeout);
+      t.timeout = setTimeout(function() {
+        var elem = $(e.currentTarget);
+        var val = elem.val();
+        $('input[name=search]').val(val)
+        $('input[name=search]').keyup()
+      }, 150);
       // setTimeout(function() {$('input[name=search]').val(val)},100); //partially mitigate lag?
     },
 
