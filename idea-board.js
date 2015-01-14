@@ -95,6 +95,7 @@ Router.route('/idea/:_id(*)', function () {
 
     suggestedRelations: function() {
       var reviewedRelations={}
+      // console.log('malRelations', this.relations);
       for (key in this.relations) {
           if (!this.relations[key].reviewed)
             reviewedRelations[key] = this.relations[key];
