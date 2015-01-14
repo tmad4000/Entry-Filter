@@ -503,7 +503,7 @@ Router.route('/idea/:_id(*)', function () {
       var breadcrumb=[];
       
       var currentIdeaIter=Session.get("current_idea");
-
+      console.log('currIdeaIter', currentIdeaIter);
       while(currentIdeaIter!==undefined && currentIdeaIter["_id"]!==null && currentIdeaIter["_id"] !== undefined) {
         breadcrumb.unshift(currentIdeaIter);
 
@@ -512,7 +512,7 @@ Router.route('/idea/:_id(*)', function () {
       } 
 
       // breadcrumb.unshift({_id:null,slug:"",path:"/",title:"Root"});
-
+      breadcrumb[0].path = '/' + breadcrumb[0].slug + '/';
       for(var i=1;i<breadcrumb.length;i++) {
         breadcrumb[i].path=breadcrumb[i-1].path+breadcrumb[i].slug+"/";
       }
@@ -521,7 +521,7 @@ Router.route('/idea/:_id(*)', function () {
       if(breadcrumb.length > 0) {
         breadcrumb[breadcrumb.length-1].last = true;
       }
-
+      console.log('finalBreadCrumb', breadcrumb)
 
       //for(var parent=Session.get("current_idea");parent!==null; parent=Ideas.find({_id:parent["parent_id"]})) {
 
