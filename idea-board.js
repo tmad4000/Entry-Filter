@@ -144,6 +144,15 @@ Router.route('/idea/:_id(*)', function () {
      console.log(Ideas.findOne({_id:sourceId}))
       // Ideas.update({_id:this._id},{$set: {"relatedIdeas."+this.targetIdea._id: {reviewed:false}})
 
+     //backlink
+     setReviewed ={}
+     setReviewed["relations."+sourceId+".reviewed"]=true;
+     setReviewed["relations."+sourceId+".weight"]=0;
+     oneDeny ={}
+     oneDeny["relations."+sourceId+".denies"]=1;
+     Ideas.update({_id:this.targetIdea._id},{$set: setReviewed, $inc:oneDeny})
+     console.log(Ideas.findOne({_id:this.targetIdea._id}))
+     
     },
   'click .relation .confirm': function(event) {
      var sourceId = Template.parentData(1)._id;
@@ -154,7 +163,14 @@ Router.route('/idea/:_id(*)', function () {
      oneConfirm["relations."+this.targetIdea._id+".confirms"]=1;
 
      Ideas.update({_id:sourceId},{$set: setReviewed, $inc:oneConfirm})
-     console.log(Ideas.findOne({_id:sourceId}))
+
+     //backlink
+     setReviewed ={}
+     setReviewed["relations."+sourceId+".reviewed"]=true;
+     oneConfirm ={}
+     oneConfirm["relations."+sourceId+".confirms"]=1;
+     Ideas.update({_id:this.targetIdea._id},{$set: setReviewed, $inc:oneConfirm})
+     
     //   var $targetLink=$(event.target)
     //   var idToExpand=$targetLink.data("id");
 
@@ -644,14 +660,15 @@ Router.route('/idea/:_id(*)', function () {
 
 
     'click .suggest-relations': function(e,t){
-      
-      var is = Ideas.find({parent_id: Session.get("current_idea")._id}).fetch();
-      is.forEach(function(idea) {
-        if (Math.random()>.7) {
-          console.log("reladded")
-          Meteor.call('insertRelationBiServer',idea._id, is[Math.floor(is.length * Math.random())]._id,  {weight: 1, reviewed: false})
-        }
-      })
+      Meteor.call('suggestRelationsServer',Session.get("current_idea"))
+
+      // var is = Ideas.find({parent_id: Session.get("current_idea")._id}).fetch();
+      // is.forEach(function(idea) {
+      //   if (Math.random()>.7) {
+      //     console.log("reladded")
+      //     Meteor.call('insertRelationBiServer',idea._id, is[Math.floor(is.length * Math.random())]._id,  {weight: 1, reviewed: false})
+      //   }
+      // })
                 
     },
     'click .import-submit': function(e,t){
