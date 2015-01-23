@@ -118,11 +118,11 @@ Template.graph.helpers({
 
     Tracker.autorun(function () {
       var id = Session.get("current_idea");
-      if(!id) return;
+      if (!id) return;
 
       // console.log(id, 'current idea id')
       var ideas = Ideas.find(
-        { parent_id: id._id }, 
+        {parent_id: id._id}, 
         {sort: {date_created: 1}}
       ).fetch();
 
@@ -147,9 +147,12 @@ Template.graph.helpers({
 
       var data = Object.keys(all_data).map(function(key){ return all_data[key] });
 
+      // return all of the links that 
       links = _.flatten(ideas.map(function(idea, i){
         return Object.keys(idea.relations || {}).filter(function(relative){
-          return relative in all_data
+          var relationExists = relative in all_data;
+          var relationWasReviewed = idea.relations[relative].reviewed;
+          return relationExists && relationWasReviewed;
         }).map(function(relative){
           return {
             source: all_data[idea._id],

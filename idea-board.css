@@ -184,7 +184,7 @@ div.relations {
 }
 
 .relation.expanded {
-	color:black;
+	color: black;
 	border: 1px black solid;
 }
 
@@ -214,4 +214,8 @@ div.relations {
 	background: #efefef;
 	width: 450px;
 	padding: 20px;
+}
+
+#login-buttons {
+	display: none;
 }

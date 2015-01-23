@@ -82,7 +82,7 @@
           <input type="text" class="import-detail-param" placeholder="(detail param)"/>
           <input type="button" class="import-submit" value="Import" />
         </div>
-
+        {{> loginButtons}}
       </ul>
       <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
@@ -106,6 +106,10 @@
       
         <li class="{{#if isListView}}active{{/if}}"><a href="?list">List View</a></li>
         <li class="{{#unless isListView}}active{{/unless}}"><a href="?graph">Graph View</a></li>
+
+
+        <!--<li class="sortoption"><a href="?date">Date</a></li>
+        <li class="sortoption"><a href="?status">Status</a></li> -->
         </ul>
     {{#if isListView}}
       {{> listView ideas=ideas}}
