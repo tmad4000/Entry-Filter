@@ -570,8 +570,11 @@ Router.route('/idea/:_id(*)', function () {
       try {
         nodes = $.parseJSON($('.import-nodes').val().trim());
         edges = $.parseJSON($('.import-edges').val().trim());
+                console.log("nodes", nodes)
+
       }      
       catch (err) {
+        console.log("json parse error")
         // Do something about the exception here
       }
       var textParam=$(".import-text-param").val() || "text"; 
