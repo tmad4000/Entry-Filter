@@ -21,6 +21,9 @@ ul.commentsList{
 
 }
 
+.search {
+	visibility: hidden;	
+}
 
 nav .breadcrumb { /* #hack */
 	margin-top: 7px;
@@ -147,7 +150,6 @@ a.subideas:hover{
 
 .notVisible {
 	visibility: hidden;
-	height: 0;
 }
 
 div.showCommentsD {

@@ -29,6 +29,9 @@ Router.route('/idea/:_id(*)', function () {
 
 
     var ideaHelpers={
+      isNotBlank: function() {
+        return this.text.trim() ? true : false;
+      },
       formatDate: function() {
         return moment(this.date_created).format('MMM Do, YYYY');
       },
@@ -378,8 +381,11 @@ Router.route('/idea/:_id(*)', function () {
     'submit': function(event) {
       event.preventDefault();
       $input = $('.idea_text'); 
+      $email = $('.email')
+      var email = $email.val().trim()
+      email = email ? ' ~' + email : '';
 
-      text=$input.val().trim();
+      text=$input.val().trim()  + email;
       if(text.indexOf("\n")!=-1) {
         var r = confirm("It looks like you're pasting in a list of ideas. Would you like to split into multiple ideas, one per newline?");
       }
