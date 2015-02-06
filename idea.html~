@@ -9,21 +9,7 @@
       
       <div class="relations">
       <div class="subideas left"><a href="{{slug}}/" data-idea-id="{{_id}}" class="subideas">subideas <span>({{numChildren}})</span></a></div>
-      <div class="comments right">
-	<a href="#" data-idea-id="{{_id}}" class="showComments">comments <span>({{numComments}})</span></a>
-	{{#if showComments}} 
-
-		<div><input type="text" class="commentInput" /><button class="submitComment"></div>
-		<ul class="commentsList">
-			{{#each comments}}
-				<li>{{text}}</li>
-			{{/each}}
-		</ul>
-
-	{{/if}}
-
-</div>
-	
+      <div class="comments right"><a href="#" data-idea-id="{{_id}}" class="comments">comments <span>({{numComments}})</span></a></div>
       {{> entryAutoComplete id=_id}}
           {{#each manuallyReviewedRelations}}
               {{> relation}}

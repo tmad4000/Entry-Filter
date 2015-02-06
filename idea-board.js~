@@ -114,10 +114,6 @@ Router.route('/idea/:_id(*)', function () {
     comments: function() {
     	return this.comments;
     }
-    
-    showComments: function() {
-    	return this._id in Session.get(showComments);
-    }
   }
 
 
@@ -220,15 +216,6 @@ Router.route('/idea/:_id(*)', function () {
   }
 
   Template.idea.events({
-
-    'click showComments': function(event) {
-      var $targetLink=$(event.target)
-      var id=$targetLink.data("id");
-	Session.set(ShowComments);
-      var $targetLink=$(event.target)
-      var idToExpand=$targetLink.data("id");
-     },
-
     'click .subideas': function(e,t){
       $('input[name=search]').val('');
       $('input[name=search]').keyup();
