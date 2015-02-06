@@ -1,3 +1,10 @@
+ul.commentsList{
+	     list-style:none;
+	     padding:0;
+	     color:#AAA;
+}
+
+
 /* CSS declarations go here */
 
 .clearSearch  {
@@ -124,17 +131,31 @@ div.left {
 }
 
 div.subideas {
+	display: none
 }
 
 a.subideas{
   text-decoration: none;
-  color:#AAA;
+display: none;
+	/*color:#FFF;*/
+  /*color:#AAA;*/
 }
 a.subideas:hover{
   text-decoration: none;
   color:#428bca;
 }
 
+.notVisible {
+	visibility: hidden;
+	height: 0;
+}
+
+div.showCommentsD {
+	text-align: right;
+}
+.commentInput {
+	width:300px;
+}
 text {
 	-webkit-user-select: none;
 	-moz-user-select: none;

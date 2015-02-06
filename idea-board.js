@@ -112,11 +112,15 @@ Router.route('/idea/:_id(*)', function () {
     },
 
     comments: function() {
-    	return this.comments;
-    }
+    	return this.comments.reverse();
+    },
     
     showComments: function() {
-    	return this._id in Session.get(showComments);
+      return Session.get('showComments'+this._id);
+
+
+     //  var showC = Session.get('showComments'+this._id) || {}
+    	// return this._id in showC;
     }
   }
 
@@ -221,10 +225,27 @@ Router.route('/idea/:_id(*)', function () {
 
   Template.idea.events({
 
-    'click showComments': function(event) {
+    'click .submitComment': function(event) {
       var $targetLink=$(event.target)
-      var id=$targetLink.data("id");
-	Session.set(ShowComments);
+      var id=$targetLink.data("idea-id");
+      var comment = $('.commentInput[data-idea-id=' + id + ']').val();
+
+      Ideas.update({"_id":id}, {$push: {comments: comment}});
+
+      
+     },
+
+    'click .showComments': function(event) {
+      var $targetLink=$(event.target)
+      var id=$targetLink.data("idea-id");
+
+      console.log('idea-id', id)
+      if(Session.get('showComments'+id))
+        Session.set('showComments'+id,false);
+      else
+        Session.set('showComments'+id,true);
+
+
       var $targetLink=$(event.target)
       var idToExpand=$targetLink.data("id");
      },
@@ -498,7 +519,7 @@ Router.route('/idea/:_id(*)', function () {
       allIdeas.forEach(function(idea, i) {
         idea.children=Ideas.find({parent_id:idea._id}, {sort: {date_created: -1}}).fetch();
         idea.numChildren=idea.children.length;
-        idea.numComments=idea.comments.length;
+        idea.numComments=(idea.comments && idea.comments.length) || 0;
         allObjects[idea._id] = i;
       });
 
